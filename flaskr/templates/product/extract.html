@@ -1,1 +1,20 @@
 {% extends "base.html" %}
+
+{% block content %}
+    {% if error_message %}
+        <div class="error-container" id="error-container">
+            <div class="error-icon">⚠️</div>
+            <div class="error-text">{{error_message}}</div>
+        </div>
+    {%endif%}
+
+    <div class="form-container">
+        <form action="{{ url_for('product.extract') }}" method="POST">
+            <div class="input-group">
+                <label for="product-id">Product Id:</label>
+                <input type="text" id="product-id" name="product_id">
+            </div>
+            <button type="submit">Extract</button>
+        </form>
+    </div>
+{% endblock content %}
