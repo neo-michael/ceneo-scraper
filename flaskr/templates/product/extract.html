@@ -1,5 +1,12 @@
 {% extends "base.html" %}
 
+{% block head %}
+    <link
+      rel="stylesheet"
+      href="{{url_for('static', filename='styles/form.css')}}"
+    />
+{% endblock head %}
+
 {% block content %}
     {% if error_message %}
         <div class="error-container" id="error-container">
