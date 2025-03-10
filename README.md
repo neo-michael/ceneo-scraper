@@ -20,7 +20,11 @@ By default application binds to [localhost:5000](http://localhost:5000).
 
 ## Contributing
 
-Pull requests are welcome, however I do not guarantee fast response. 
+Pull requests are welcome, however I do not guarantee fast response.
+
+## Credits
+
+- [Lorc](https://lorcblog.blogspot.com/) for providing [Favicon](flaskr/static/images/favicon.svg) icon through [Game-Icons.net](https://game-icons.net/1x1/lorc/magnifying-glass.html)
 
 ## License
 
