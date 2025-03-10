@@ -11,13 +11,14 @@
       rel="stylesheet"
       href="{{url_for('static', filename='styles/menu.css')}}"
     />
+    {% block head %}{% endblock head %}
     <title>{% block title %}{% endblock %}</title>
   </head>
   <body>
     <div class="menu-container">
       <ul class="menu-list">
         <li><a href="{{url_for('description.index')}}">Main Page</a></li>
-        <li><a href="{{url_for('product.extract')}}">Extract revies</a></li>
+        <li><a href="{{url_for('product.extract')}}">Extract reviews</a></li>
         <li><a href="{{url_for('product.product_list')}}">Product List</a></li>
         <li><a href="{{url_for('description.about')}}">About</a></li>
       </ul>
