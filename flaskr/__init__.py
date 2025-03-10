@@ -21,12 +21,16 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-    from . import description
-    app.register_blueprint(description.bp)
-
     # Route index to the correct view
     @app.route('/')
     def index():
         return redirect(url_for("description.index"))
+
+
+    from . import description
+    app.register_blueprint(description.bp)
+
+    from . import product
+    app.register_blueprint(product.bp)
 
     return app
