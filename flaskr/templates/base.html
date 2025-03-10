@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="pl-PL">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}{% endblock %}</title>
+  </head>
+  <body>
+    <div class="menu-container">
+      <ul class="menu-list">
+        <li><a href="{{url_for('index')}}">Strona główna</a></li>
+        {# <li><a href="{{url_for('extract')}}">Ekstrakcja opinii</a></li>
+        <li><a href="{{url_for('product_list')}}">Lista produktów</a></li>
+        <li><a href="{{url_for('about')}}">O autorze</a></li> #}
+      </ul>
+    </div>
+  </body>
+</html>

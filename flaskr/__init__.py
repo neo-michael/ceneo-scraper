@@ -1,6 +1,7 @@
 import os
 
 from flask import Flask
+from flask import render_template, redirect, url_for
 
 
 def create_app(test_config=None):
@@ -20,8 +21,12 @@ def create_app(test_config=None):
     except OSError:
         pass
 
+    from . import description
+    app.register_blueprint(description.bp)
+
+    # Route index to the correct view
     @app.route('/')
     def index():
-        return ""
+        return redirect(url_for("description.index"))
 
     return app
