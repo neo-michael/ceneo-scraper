@@ -1,17 +1,19 @@
 <!DOCTYPE html>
-<html lang="pl-PL">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{{url_for('static', filename='styles/base.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='styles/menu.css')}}">
     <title>{% block title %}{% endblock %}</title>
   </head>
   <body>
     <div class="menu-container">
       <ul class="menu-list">
-        <li><a href="{{url_for('description.index')}}">Strona główna</a></li>
-        <li><a href="{{url_for('product.extract')}}">Ekstrakcja opinii</a></li>
-        <li><a href="{{url_for('product.product_list')}}">Lista produktów</a></li>
-        <li><a href="{{url_for('description.about')}}">O autorze</a></li>
+        <li><a href="{{url_for('description.index')}}">Main Page</a></li>
+        <li><a href="{{url_for('product.extract')}}">Extract revies</a></li>
+        <li><a href="{{url_for('product.product_list')}}">Product List</a></li>
+        <li><a href="{{url_for('description.about')}}">About</a></li>
       </ul>
     </div>
   </body>
