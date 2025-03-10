@@ -1,6 +1,6 @@
 # Ceneo Scraper
 
-Ceneo Scraper is a Python web application for downloading and analying reviews from [Ceneo](ceneo.pl)
+Ceneo Scraper is a Python web application for downloading and analying reviews from [Ceneo](https://ceneo.pl)
 
 ## Installation
 
