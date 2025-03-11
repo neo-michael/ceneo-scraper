@@ -15,7 +15,7 @@ async def _fetch_reviews(product_id):
     base_url = "https://www.ceneo.pl"
     location = f"/{product_id}#tab=reviews"
 
-    # header copy pasted from browser
+    # headers copy pasted from browser
     headers = {
         "Host": "www.ceneo.pl",
         "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:135.0) Gecko/20100101 Firefox/135.0",
@@ -43,7 +43,7 @@ async def _fetch_reviews(product_id):
     ) as client:
         i = 1
         while True:
-            print(i)
+            print(f"Fetching page {i}")
             response = await client.get(base_url + location)
             (new_reviews, next_location) = parse_reviews(response.text)
 
@@ -53,7 +53,7 @@ async def _fetch_reviews(product_id):
 
             location = next_location
             i += 1
-    print(len(reviews))
+    
 
 
 def parse_reviews(contents):

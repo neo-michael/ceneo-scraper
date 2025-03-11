@@ -23,12 +23,12 @@ Source the environment (Powershell):
 ```
 
 > Note: If the above command doesn't work on Powershell you have to allow scripts to be run. You can achieve this with:
+
 ```powershell
 Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
 ```
 
 ## Installation
-
 
 Use the package manager [pip](https://pip.pypa.io/en/stable/) to install foobar.
 
@@ -36,13 +36,17 @@ Use the package manager [pip](https://pip.pypa.io/en/stable/) to install foobar.
 pip install -r requirements.txt
 ```
 
-## Usage
+## Starting the server
 
 ```python
 flask --app flaskr run --debug
 ```
 
 By default application binds to [localhost:5000](http://localhost:5000).
+
+## Usage
+
+See "How to use this?" section in [ABOUT.md](ABOUT.md)
 
 ## Contributing
 
