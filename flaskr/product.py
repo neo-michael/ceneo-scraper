@@ -21,9 +21,10 @@ async def extract():
         product_id = request.form.get("product_id", default="")
 
         if is_valid_product_id(product_id):
+            # TODO: check if product is already downloaded
             #await extractor.save_reviews_to_json(product_id)
             await extractor._fetch_reviews(product_id)
-            return redirect(url_for("product.product", product_id=product_id), code=302)
+            return redirect(url_for("product.product", product_id=product_id))
         
         return render_template(
             "product/extract.html",
@@ -38,7 +39,6 @@ async def extract():
 
 @bp.route("/<product_id>", methods=("GET", ))
 def product(product_id):
-    print(product_id)
     return ""
 
 
