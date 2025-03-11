@@ -10,4 +10,4 @@ def product_list():
 
 @bp.route("/extract", methods=("GET", "POST"))
 def extract():
-    return render_template('product/extract.html')
+    return render_template('product/extract.html', error_message="Test")
