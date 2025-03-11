@@ -1,0 +1,83 @@
+.markdown {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 2rem;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.markdown h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: #222;
+}
+
+.markdown h2 {
+    font-size: 1.8rem;
+    margin-top: 2rem;
+    color: #444;
+}
+
+.markdown p {
+    line-height: 1.6;
+    font-size: 1rem;
+    margin: 0.5rem 0 1rem 0;
+}
+
+.markdown a {
+    color: #0077cc;
+    text-decoration: none;
+    border-bottom: 1px dotted #0077cc;
+    transition: all 0.2s ease;
+}
+
+.markdown a:hover {
+    color: #005fa3;
+    border-bottom: 1px solid #005fa3;
+}
+
+.markdown blockquote {
+    background-color: #f1f1f1;
+    border-left: 4px solid #0077cc;
+    padding: 1rem;
+    margin: 1.5rem 0;
+    font-style: italic;
+    color: #555;
+}
+
+.markdown ol {
+    counter-reset: list-counter;
+    padding-left: 1.5rem;
+    margin-top: 1rem;
+    list-style: none;
+}
+
+.markdown li {
+    position: relative;
+    margin-bottom: 1.2rem;
+    padding-left: 1.8rem;
+    line-height: 1.6;
+}
+
+.markdown li::before {
+    counter-increment: list-counter;
+    content: counter(list-counter) ".";
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: #0077cc;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.markdown li:hover {
+    background-color: #f5faff;
+    border-radius: 6px;
+    padding-left: 2rem;
+    transition: background-color 0.2s ease;
+}
+
+.markdown li p {
+    margin: 0.3rem 0;
+}
