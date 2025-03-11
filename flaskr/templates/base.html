@@ -1,14 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ get_locale() }}">
 
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" sizes="any" type="image/svg+xml" href="{{url_for('static', filename='images/favicon.svg')}}" />
+
     <link rel="stylesheet" href="{{url_for('static', filename='styles/base.css')}}" />
     <link rel="stylesheet" href="{{url_for('static', filename='styles/menu.css')}}" />
     <link rel="stylesheet" href="{{url_for('static', filename='styles/error.css')}}" />
+
     <script src="{{url_for('static', filename='scripts/dismiss.js')}}"></script>
+
     {% block head %}{% endblock head %}
 
     <title>{% block title %}{% endblock %}</title>
@@ -17,11 +20,23 @@
 <body>
     <div class="menu-container">
         <ul class="menu-list">
-            <li><a href="{{url_for('description.index')}}">Main Page</a></li>
-            <li><a href="{{url_for('product.extract')}}">Extract reviews</a></li>
-            <li><a href="{{url_for('product.product_list')}}">Product List</a></li>
-            <li><a href="{{url_for('description.about')}}">About</a></li>
+            <li><a href="{{url_for('description.index')}}">{{ _("Main Page") }}</a></li>
+            <li><a href="{{url_for('product.extract')}}">{{ _("Extract reviews") }}</a></li>
+            <li><a href="{{url_for('product.product_list')}}">{{ _("Product List") }}</a></li>
+            <li><a href="{{url_for('description.about')}}">{{ _("About me") }}</a></li>
         </ul>
+        
+        <div class="language-switch">
+            <form method="post" action="{{ url_for('set_language', location=request.endpoint) }}">
+                <select name="lang" onchange="this.form.submit()">
+                    {% for locale in get_locales() %}
+                        <option value="{{ locale }}" {% if request.cookies.get('lang') == locale %}selected{% endif %}>
+                            {{ locale | upper }}    
+                        </option>
+                    {% endfor %}
+                </select>
+            </form>
+        </div>
     </div>
     {% if error_message %}
     <div class="error-container" id="error-container">

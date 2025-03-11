@@ -48,11 +48,6 @@ By default application binds to [localhost:5000](http://localhost:5000).
 
 See "How to use this?" section in [ABOUT.md](ABOUT.md)
 
-## Wiki
-
-See [WIKI.md](WIKI.md)
-
-
 ## Contributing
 
 Pull requests are welcome, however I do not guarantee fast response.

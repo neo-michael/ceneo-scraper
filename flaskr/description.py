@@ -1,15 +1,14 @@
 from flask import Blueprint
-from flask import render_template, redirect, url_for
+from flask import render_template, redirect, url_for, request
 
-from .scripts.utils import mark2html
-
+from .scripts.utils import mark2html, get_locale
 
 bp = Blueprint("description", __name__, url_prefix="/description")
 
 
 @bp.route("/index", methods=("GET",))
 def index():
-    return render_template("description/index.html", text=mark2html("./ABOUT.md"))
+    return render_template("description/index.html", text=mark2html("./ABOUT", get_locale()))
 
 @bp.route("/about", methods=("GET",))
 def about():
@@ -17,7 +16,7 @@ def about():
 
 @bp.route("<file_name>", methods=("GET", ))
 def handle_file(file_name):
-    if not file_name == "README.md":
+    if not file_name in ("README.md", "WIKI.md"):
         return redirect(url_for("description.index"))
     
-    return render_template("description/index.html", text=mark2html("./README.md"))
+    return render_template("description/index.html", text=mark2html(file_name[:-3], get_locale()))

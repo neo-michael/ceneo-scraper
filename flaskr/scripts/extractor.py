@@ -85,8 +85,3 @@ def parse_reviews(contents):
         return (reviews, "")
 
     return (reviews, next_location["href"])
-
-
-if __name__ == "__main__":
-    with open("flaskr/example3.html", "r", encoding="utf-8") as file:
-        print(len(parse_reviews(file.read())[0]))

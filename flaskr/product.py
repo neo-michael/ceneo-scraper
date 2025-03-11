@@ -1,6 +1,7 @@
 from flask import Blueprint
 from flask import render_template, redirect, request, url_for
 
+from flask_babel import _
 
 from .scripts import extractor
 
@@ -28,12 +29,12 @@ async def extract():
         
         return render_template(
             "product/extract.html",
-            error_message="Product id should only contain digits.",
+            error_message=_("Product id should only contain digits."),
         )
 
     return render_template(
         "product/extract.html",
-        error_message="Unexpected error occured. Please report it to the site owner.",
+        error_message=_("Unexpected error occured. Please report it to the site owner."),
     )
 
 

@@ -2,6 +2,11 @@
     background-color: #333;
     padding: 10px;
     text-align: center;
+    display: flex;
+    justify-content: center;  /* Centers the menu items horizontally */
+    width: 100%;
+    max-width: 99%;
+    position: relative;
 }
 
 .menu-list {
@@ -30,4 +35,38 @@
     background-color: #555;
     color: #fff;
     border-radius: 4px;
+}
+
+.language-switch {
+    position: absolute;
+    right: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 92px;
+}
+
+.language-switch select {
+    background-color: #444;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    appearance: none;
+    outline: none;
+}
+
+.language-switch option {
+    background-color: #444;
+    color: white;
+}
+
+.language-switch option:checked {
+    background-color: #888;
+    color: black;
+}
+.language-switch form {
+
+    width: 100px;
 }

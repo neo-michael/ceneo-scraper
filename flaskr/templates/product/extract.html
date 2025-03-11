@@ -1,6 +1,12 @@
 {% extends "base.html" %}
 
+{% block title %}
+    {{ gettext("Extract") }}
+{% endblock title %}
+
+
 {% block head %}
+
     <link
       rel="stylesheet"
       href="{{url_for('static', filename='styles/form.css')}}"
@@ -23,10 +29,10 @@
     <div class="form-container">
         <form action="{{ url_for('product.extract') }}" method="POST">
             <div class="input-group">
-                <label for="product-id">Product Id:</label>
+                <label for="product-id">{{ gettext("Product Id") }}:</label>
                 <input type="text" id="product-id" name="product_id">
             </div>
-            <button type="submit" onclick="toggle_loader(true)">Extract</button>
+            <button type="submit" onclick="toggle_loader(true)">{{ gettext("Extract") }}</button>
         </form>
     </div>
 {% endblock content %}
