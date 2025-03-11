@@ -6,25 +6,25 @@ Ceneo Scraper is a Python web application for downloading and analying reviews f
 
 Create virtual environment:
 
-```bash
+```
 python -m venv .venv
 ```
 
 Source the environment (bash):
 
-```bash
+```
 source .venv/bin/activate
 ```
 
 Source the environment (Powershell):
 
-```powershell
+```
 .venv/bin/Activate.ps1
 ```
 
 > Note: If the above command doesn't work on Powershell you have to allow scripts to be run. You can achieve this with:
 
-```powershell
+```
 Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
 ```
 
@@ -32,13 +32,13 @@ Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
 
 Use the package manager [pip](https://pip.pypa.io/en/stable/) to install foobar.
 
-```bash
+```
 pip install -r requirements.txt
 ```
 
 ## Starting the server
 
-```python
+```
 flask --app flaskr run --debug
 ```
 

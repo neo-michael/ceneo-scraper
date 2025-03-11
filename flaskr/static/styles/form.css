@@ -28,6 +28,7 @@ form {
     display: block;
 
     font-weight: bold;
+    font-size: 20px;
 
     margin-bottom: 5px;
 }
@@ -35,11 +36,11 @@ form {
 .input-group input {
     border: 1px solid #ccc;
     border-radius: 4px;
-    font-size: 14px;
+    font-size: 16px;
 
     box-sizing: border-box;
     width: 100%;
-    padding: 8px;
+    padding: 10px;
 }
 
 button {
@@ -48,6 +49,7 @@ button {
     color: white;
     border: none;
     border-radius: 4px;
+    font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }

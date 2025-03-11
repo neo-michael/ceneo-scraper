@@ -2,7 +2,7 @@ from flask import Blueprint
 from flask import render_template, redirect, request, url_for
 
 
-from . import extractor
+from .scripts import extractor
 
 bp = Blueprint("product", __name__, url_prefix="/product")
 

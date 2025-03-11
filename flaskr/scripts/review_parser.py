@@ -1,4 +1,4 @@
-from .review import Review
+from ..models.review import Review
 
 class ReviewParser:
 
