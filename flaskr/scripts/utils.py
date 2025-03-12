@@ -22,11 +22,3 @@ def get_locale():
         return request.cookies.get("lang")
     
     return request.accept_languages.best_match(current_app.config["LANGUAGES"])
-
-def get_other_locale():
-    current_loc = get_locale()
-
-    for loc in current_app.config["LANGUAGES"]:
-        if not loc == current_loc:
-            return loc
-    return "en"
