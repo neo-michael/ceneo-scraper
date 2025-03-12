@@ -41,7 +41,6 @@ async def extract():
 
 @bp.route("/<product_id>", methods=("GET", ))
 def product(product_id):
-
     with open(f"./reviews/{product_id}.json", encoding="utf-8") as fp:
         reviews = fp.read()
 

@@ -28,6 +28,7 @@
         
         <div class="language-switch">
             <form method="post" action="{{ url_for('set_language', location=request.endpoint) }}">
+                <input type="hidden" name="args" id="args" value="{{ request.view_args }}" hidden />
                 <select name="lang" onchange="this.form.submit()">
                     {% for locale in get_locales() %}
                         <option value="{{ locale }}" {% if get_locale() == locale %}selected{% endif %}>

@@ -23,7 +23,9 @@ async def _fetch_reviews(product_id):
     reviews = []
 
     async with httpx.AsyncClient(
-        headers=current_app.config["HEADERS"], http2=True, follow_redirects=True,
+        headers=current_app.config["HEADERS"],
+        http2=True,
+        follow_redirects=True,
     ) as client:
 
         page = 1

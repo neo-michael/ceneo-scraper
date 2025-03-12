@@ -1,4 +1,5 @@
 import os
+import json
 
 from flask import Flask
 from flask import make_response, redirect, render_template, request, session, url_for
@@ -25,7 +26,10 @@ def create_app(test_config=None):
 
     @app.route("/set_language/<location>", methods=("POST",))
     def set_language(location):
-        response = make_response(redirect(url_for(location)))
+        # Python's json library expexts double quotes instead of single :(
+        args = request.form["args"].replace("'", '"')
+        response = make_response(redirect(url_for(location, **json.loads(args))))
+
         lang = request.form["lang"]
         response.set_cookie("lang", lang)
         return response

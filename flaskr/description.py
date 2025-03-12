@@ -1,5 +1,5 @@
 from flask import Blueprint
-from flask import redirect, render_template, request, url_for
+from flask import make_response, redirect, render_template, request, url_for
 
 from .scripts.utils import mark2html, get_locale
 
@@ -14,9 +14,20 @@ def index():
 def about():
     return render_template("description/about.html")
 
-@bp.route("<file_name>", methods=("GET", ))
+# @bp.route("/", methods=("GET", "POST"))
+@bp.route("/<file_name>", methods=("GET", "POST"))
 def handle_file(file_name):
+    # if not file_name and "last_file" in request.cookies:
+    #     print("TEST")
+    #     file_name = request.cookies["last_file"]
+    # not file_name or 
     if not file_name in ("README.md", "WIKI.md"):
         return redirect(url_for("description.index"))
+    
+    # html = render_template("description/index.html", text=mark2html(file_name[:-3], get_locale()))
+    # if file_name:
+    #     response = make_response(html)
+    #     response.set_cookie("last_file", file_name)
+    #     return response
     
     return render_template("description/index.html", text=mark2html(file_name[:-3], get_locale()))
