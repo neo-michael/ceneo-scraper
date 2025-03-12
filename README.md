@@ -30,7 +30,7 @@ Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
 
 ## Installation
 
-Use the package manager [pip](https://pip.pypa.io/en/stable/) to install foobar.
+Use the package manager [pip](https://pip.pypa.io/en/stable/) to install necessary packages.
 
 ```
 pip install -r requirements.txt

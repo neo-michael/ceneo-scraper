@@ -1,61 +1,66 @@
 # Ceneo Scraper
 
-Ceneo Scraper is a Python web application for downloading and analying reviews from [Ceneo](https://ceneo.pl)
+Ceneo Scraper to aplikacja webowa napisana w Pythonie do pobierania i analizowania opinii z [Ceneo](https://ceneo.pl)
 
-## Prerequisites
+## Zanim zaczniesz...
 
-Create virtual environment:
+Utwórz wirtualne środowisko:
 
 ```
 python -m venv .venv
 ```
 
-Source the environment (bash):
+Aktywuj środowisko (bash)
 
 ```
 source .venv/bin/activate
 ```
 
-Source the environment (Powershell):
+Aktywuj środowisko (Powershell):
 
 ```
 .venv/bin/Activate.ps1
 ```
 
-> Note: If the above command doesn't work on Powershell you have to allow scripts to be run. You can achieve this with:
-
+> Notka: Jeżeli komenda powyżej zwróci błąd w powłoce Powershell, musisz ustawić poziom wykonywania skryptów. O tak:
 ```
 Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
 ```
 
-## Installation
+## Instalowanie
 
-Use the package manager [pip](https://pip.pypa.io/en/stable/) to install foobar.
+Używają menadżera pakietów [pip](https://pip.pypa.io/en/stable/) zainstaluj potrzebne biblioteki.
 
 ```
 pip install -r requirements.txt
 ```
 
-## Starting the server
+## Włączanie serwera
 
 ```
 flask --app flaskr run --debug
 ```
 
-By default application binds to [localhost:5000](http://localhost:5000).
+Domyślnie aplikacja znajduję się pod tym adresem: [localhost:5000](http://localhost:5000).
 
-## Usage
+## Użytkowanie
 
-See "How to use this?" section in [ABOUT.md](ABOUT.md)
+Zobacz sekcje "Jak tego użyć?" w [ABOUT-pl.md](ABOUT-pl.md)
 
-## Contributing
 
-Pull requests are welcome, however I do not guarantee fast response.
+## Wiki
 
-## Credits
+Zobacz [WIKI-pl.md](WIKI-pl.md)
 
-- [Lorc](https://lorcblog.blogspot.com/) for providing [Favicon](flaskr/static/images/favicon.svg) icon via [Game-Icons.net](https://game-icons.net/1x1/lorc/magnifying-glass.html)
 
-## License
+## Wkład i współpraca
 
-This repository is licensed under [MIT](LICENSE).
+"Pull request" są mile widziane, natomiast nie gwarantuje szybkiej odpowiedzi na nie.
+
+## Podziękowania i uznania
+
+- [Lorc](https://lorcblog.blogspot.com/) za ikonę [Favicon](flaskr/static/images/favicon.svg) ze strony [Game-Icons.net](https://game-icons.net/1x1/lorc/magnifying-glass.html)
+
+## Licencja
+
+To repozyterium posiada licencję [MIT](LICENSE).
