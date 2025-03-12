@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-03-11 22:57+0100\n"
+"POT-Creation-Date: 2025-03-12 22:55+0100\n"
 "PO-Revision-Date: 2025-03-11 20:48+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: pl\n"
@@ -19,11 +19,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.17.0\n"
 
-#: flaskr/product.py:32
+#: flaskr/product.py:28
 msgid "Product id should only contain digits."
 msgstr "Id produktu powinno zawierać tylko cyfry."
 
-#: flaskr/product.py:37
+#: flaskr/product.py:38
 msgid "Unexpected error occured. Please report it to the site owner."
 msgstr "Wystąpił nieoczekiwany błąd. Proszę zgłoś go właścielowi strony"
 
@@ -43,12 +43,16 @@ msgstr "Lista produktów"
 msgid "About me"
 msgstr "O mnie"
 
+#: flaskr/templates/description/libraries.html:1
+msgid "Libraries used by this project:"
+msgstr "Biblioteki użyte w tym projekcie:"
+
 #: flaskr/templates/product/extract.html:4
-#: flaskr/templates/product/extract.html:35
+#: flaskr/templates/product/extract.html:31
 msgid "Extract"
 msgstr "Ekstraktuj"
 
-#: flaskr/templates/product/extract.html:32
+#: flaskr/templates/product/extract.html:28
 msgid "Product Id"
 msgstr "Id produktu"
 

@@ -10,9 +10,13 @@ Serwer przechowuje do 500 opinii dla danego produktu oraz pomaga w podjęciu dec
 
 Opinie o produkcie są pobierane asynchronicznie poprzez [httpx](https://www.python-httpx.org/), które są przetwarzane przez [BeautifulSoup](https://pypi.org/project/beautifulsoup4/). Następnie dane są wyszukiwane poprzez tagi oraz atrybuty, ze zwróconą uwagą na błędy.
 
+## Bibilioteki
+
+Zobacz: [biblioteki](libraries).
+
 ## Jak tego użyć?
 
-> Notka: Upewnij się, że serwer jest włączony. Kroki potrzebne do uruchomienia serwera znajdują się w [README.md](README.md).
+> Notka: Upewnij się, że serwer jest włączony. Kroki potrzebne do uruchomienia serwera znajdują się w [README-pl.md](README-pl.md).
 
 1. Wybierz produkt z [Ceneo.pl](https://ceneo.pl).
 2. Zanotuj id tego produktu:

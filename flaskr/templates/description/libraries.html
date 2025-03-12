@@ -1,0 +1,6 @@
+<h1>{{ _("Libraries used by this project:") }}</h1>
+<ul>
+    {% for lib in libs %}
+        <li><a href="https://pypi.org/project/{{ lib }}">{{ lib }}</a></li>
+    {% endfor %}
+</ul>

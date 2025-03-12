@@ -1,6 +1,6 @@
 # Description
 
-## What it does?
+## Purpose
 
 This is a web app that downloads and processes reviews from [Ceneo.pl](https://ceneo.pl).
 
@@ -9,6 +9,10 @@ The server stores up to 500 reviews for a given product and provides useful stat
 ## How does it do it?
 
 Product page is fetched asynchronously via [httpx](https://www.python-httpx.org/), which is then parsed by [BeautifulSoup](https://pypi.org/project/beautifulsoup4/). Information is queried by tags and class attributes and it's done in error-prone manner.
+
+## Libraries
+
+See: [libraries](libraries).
 
 ## How to use it?
 
