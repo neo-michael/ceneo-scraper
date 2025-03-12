@@ -9,3 +9,10 @@ body {
     max-width: 100%;
     overflow-x: hidden;
 }
+
+.reviews-table-parent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70vh;
+}

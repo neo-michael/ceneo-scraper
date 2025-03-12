@@ -1,7 +1,7 @@
-from flask import request, current_app, session
-from os import path
-
 import markdown
+
+from flask import current_app, request, session
+from os import path
 
 
 def mark2html(markdown_file, locale):

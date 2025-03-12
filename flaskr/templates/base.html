@@ -4,13 +4,13 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" sizes="any" type="image/svg+xml" href="{{url_for('static', filename='images/favicon.svg')}}" />
+    <link rel="icon" sizes="any" type="image/svg+xml" href="{{ url_for('static', filename='images/favicon.svg') }}" />
 
-    <link rel="stylesheet" href="{{url_for('static', filename='styles/base.css')}}" />
-    <link rel="stylesheet" href="{{url_for('static', filename='styles/menu.css')}}" />
-    <link rel="stylesheet" href="{{url_for('static', filename='styles/error.css')}}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/base.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/menu.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/error.css') }}" />
 
-    <script src="{{url_for('static', filename='scripts/dismiss.js')}}"></script>
+    <script src="{{ url_for('static', filename='scripts/dismiss.js') }}"></script>
 
     {% block head %}{% endblock head %}
 
@@ -20,17 +20,17 @@
 <body>
     <div class="menu-container">
         <ul class="menu-list">
-            <li><a href="{{url_for('description.index')}}">{{ _("Main Page") }}</a></li>
-            <li><a href="{{url_for('product.extract')}}">{{ _("Extract reviews") }}</a></li>
-            <li><a href="{{url_for('product.product_list')}}">{{ _("Product List") }}</a></li>
-            <li><a href="{{url_for('description.about')}}">{{ _("About me") }}</a></li>
+            <li><a href="{{ url_for('description.index') }}">{{ _("Main Page") }}</a></li>
+            <li><a href="{{ url_for('product.extract') }}">{{ _("Extract reviews") }}</a></li>
+            <li><a href="{{ url_for('product.product_list') }}">{{ _("Product List") }}</a></li>
+            <li><a href="{{ url_for('description.about') }}">{{ _("About me") }}</a></li>
         </ul>
         
         <div class="language-switch">
             <form method="post" action="{{ url_for('set_language', location=request.endpoint) }}">
                 <select name="lang" onchange="this.form.submit()">
                     {% for locale in get_locales() %}
-                        <option value="{{ locale }}" {% if request.cookies.get('lang') == locale %}selected{% endif %}>
+                        <option value="{{ locale }}" {% if get_locale() == locale %}selected{% endif %}>
                             {{ locale | upper }}    
                         </option>
                     {% endfor %}
@@ -41,7 +41,7 @@
     {% if error_message %}
     <div class="error-container" id="error-container">
         <div class="error-icon">⚠️</div>
-        <div class="error-text">{{error_message}}</div>
+        <div class="error-text">{{ error_message }}</div>
         <button class="error-close" onclick="dismiss_error()">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
                 stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -50,7 +50,7 @@
             </svg>
         </button>
     </div>
-    {% endif %} 
+    {% endif %}
     {% block content %}{% endblock content %}
 </body>
 

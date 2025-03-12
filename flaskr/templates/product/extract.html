@@ -1,24 +1,20 @@
 {% extends "base.html" %}
 
 {% block title %}
-    {{ gettext("Extract") }}
+    {{ _("Extract") }}
 {% endblock title %}
 
-
 {% block head %}
-
     <link
       rel="stylesheet"
-      href="{{url_for('static', filename='styles/form.css')}}"
+      href="{{ url_for('static', filename='styles/form.css') }}"
     />
-
     <link
       rel="stylesheet"
-      href="{{url_for('static', filename='styles/loader.css')}}"
+      href="{{ url_for('static', filename='styles/loader.css') }}"
     />
 
-    <script src="{{url_for('static', filename='scripts/loader.js')}}"></script>
-    
+    <script src="{{ url_for('static', filename='scripts/loader.js') }}"></script>
 {% endblock head %}
 
 {% block content %}
@@ -29,10 +25,10 @@
     <div class="form-container">
         <form action="{{ url_for('product.extract') }}" method="POST">
             <div class="input-group">
-                <label for="product-id">{{ gettext("Product Id") }}:</label>
+                <label for="product-id">{{ _("Product Id") }}:</label>
                 <input type="text" id="product-id" name="product_id">
             </div>
-            <button type="submit" onclick="toggle_loader(true)">{{ gettext("Extract") }}</button>
+            <button type="submit" onclick="toggle_loader(true)">{{ _("Extract") }}</button>
         </form>
     </div>
 {% endblock content %}

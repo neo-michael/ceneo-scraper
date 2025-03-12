@@ -1,14 +1,15 @@
 import os
 
 from flask import Flask
-from flask import render_template, redirect, url_for, session, request, make_response
-
-from .scripts.utils import get_locale, get_other_locale
+from flask import make_response, redirect, render_template, request, session, url_for
 
 from flask_babel import Babel
 
+from .scripts.utils import get_locale
+
+
 def create_app(test_config=None):
-    app = Flask(__name__, instance_relative_config=True)
+    app = Flask(__name__)
     
     if test_config is None:
         app.config.from_pyfile("config.py", silent=True)
@@ -16,11 +17,6 @@ def create_app(test_config=None):
         app.config.from_mapping(test_config)
     
     babel = Babel(app, locale_selector=get_locale)
-
-    try:
-        os.makedirs(app.instance_path)
-    except OSError:
-        pass
 
     # Route index to the correct view
     @app.route("/", methods=("GET",))
@@ -39,7 +35,6 @@ def create_app(test_config=None):
 
     app.register_blueprint(description.bp)
     app.register_blueprint(product.bp)
-
 
     app.jinja_env.globals.update(get_locale=get_locale)
     app.jinja_env.globals.update(get_locales=lambda: app.config["LANGUAGES"])

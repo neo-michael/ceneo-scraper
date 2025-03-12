@@ -1,4 +1,4 @@
-let toggle_loader = (show) => {
+const toggle_loader = (show) => {
     const loader = document.getElementById('loader_overlay');
     const body = document.body;
     if (show) {
@@ -10,7 +10,7 @@ let toggle_loader = (show) => {
     }
 }
 
-// HACK: disable loader when the page changes
+// HACK: disable loader when the page is refreshed
 setInterval(() => {
     if (window.performance.getEntriesByType("navigation")[0].type !== "navigate") {
         toggle_loader(false)

@@ -1,4 +1,4 @@
-let dismiss_error = () => {
+const dismiss_error = () => {
     const errorBox = document.getElementById("error-container");
 
     if (!errorBox) {

@@ -7,7 +7,7 @@ class ReviewParser:
 
         review.id = content["data-entry-id"]
         review.author = self._parse_author(content)
-        review.recomend = self._parse_recomend(content)
+        review.recommend = self._parse_recommend(content)
         review.stars = self._parse_stars(content)
 
         (
@@ -33,7 +33,7 @@ class ReviewParser:
 
         return tag.text.strip()
 
-    def _parse_recomend(self, content):
+    def _parse_recommend(self, content):
         tag = content.find("span", class_="user-post__author-recomendation")
         if not tag:
             return False
@@ -105,7 +105,9 @@ class ReviewParser:
         if not tag:
             return ""
 
-        return tag.text.strip()
+        # replace the quote to prevent unexpeted string escaping
+        return tag.text.strip().replace('"', '\u201c')
+    
 
     def _parse_verified(self, content):
         tag = content.find("div", class_="review-pz")

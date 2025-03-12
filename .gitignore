@@ -16,3 +16,6 @@ build/
 example*.html
 
 *.pot
+
+
+reviews/

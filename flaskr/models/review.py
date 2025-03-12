@@ -1,8 +1,10 @@
+import json
+
 class Review:
     def __init__(self):
         self.id = ""
         self.author = ""
-        self.recomend = False
+        self.recommend = False
         # self.is_ai_highlight = False
         self.stars = 1.0
         self.published_datetime = ""
@@ -18,16 +20,6 @@ class Review:
         self.cons = []
         self.comments = []
 
+    def to_json_str(self):
+        return json.dumps(self, default=lambda o: o.__dict__, ensure_ascii=False)
 
-# author name: str
-# recomend: bool
-# stars: float [1-5]
-# date published: str
-# time used before listing: str
-# likes: int
-# dislikes: int
-# review origin: str
-# review content: str
-# is verified: bool
-# images: list[str] - links to images on ceneo.pl
-# comments: list[Comment]

@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block head %}
+  <link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='ext/tabulator/css/tabulator_modern.min.css' )}}"
+  />
+
+  <script src="{{ url_for('static', filename='ext/tabulator/js/tabulator.min.js') }}"></script>
+
+{% endblock head %}
+
+{% block content %}
+    <div class="reviews-table-parent">
+        <div id="reviews-table"></div>
+    </div>
+    <script>
+        var tabledata = JSON.parse("{{ reviews | safe }}")
+
+        var table = new Tabulator("#reviews-table", {
+            data: tabledata,
+            layout: "fitColumns",
+            layout: "fitData",
+            addRowPos: "top",
+            pagination: "local",
+            paginationSize: 10,
+            paginationCounter: "rows",
+            movableColumns: true,
+            columnDefaults: {
+                tooltip: true,
+            },
+            columns: [
+                { title: "Id", field: "id", headerFilter: "input" },
+                { title: "Author", field: "author", headerFilter: "input" },
+                { title: "Recommend", field: "recommend", headerFilter: "input", 
+                    formatter: (cell) => {
+                        console.log(cell.getValue())
+                        return cell.getValue() ? "Yes" : "No";
+                    } 
+                },
+                { title: "Stars", field: "stars", headerFilter: "input", formatter: "star" },
+                { title: "Publish date", field: "published_datetime", headerFilter: "input" },
+                { title: "Likes", field: "likes", headerFilter: "input" },
+                { title: "Disikes", field: "dislikes", headerFilter: "input" }
+            ]
+        });
+    </script>
+{% endblock content %}

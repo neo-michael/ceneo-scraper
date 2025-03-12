@@ -1,5 +1,5 @@
 from flask import Blueprint
-from flask import render_template, redirect, url_for, request
+from flask import redirect, render_template, request, url_for
 
 from .scripts.utils import mark2html, get_locale
 
