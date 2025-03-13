@@ -10,6 +10,8 @@ Serwer przechowuje do 500 opinii dla danego produktu oraz pomaga w podjęciu dec
 
 Opinie o produkcie są pobierane asynchronicznie poprzez [httpx](https://www.python-httpx.org/), które są przetwarzane przez [BeautifulSoup](https://pypi.org/project/beautifulsoup4/). Następnie dane są wyszukiwane poprzez tagi oraz atrybuty, ze zwróconą uwagą na błędy.
 
+Wyciągnięcie wszystkich opinii nie jest proste. Aplikacja podszywa się pod prawdziwego użytkownika poprzez nagłówki zapytania, które bezpośrednio zostały skopiowane z przeglądarki. Wygląda na to, że [Ceneo.pl](https://ceneo.pl) sprawdza ciasteczka sesji użytkownika jeśli pobierane są następne strony opinii produktu.
+
 ## Bibilioteki
 
 Zobacz: [biblioteki](libraries).

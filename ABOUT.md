@@ -10,6 +10,8 @@ The server stores up to 500 reviews for a given product and provides useful stat
 
 Product page is fetched asynchronously via [httpx](https://www.python-httpx.org/), which is then parsed by [BeautifulSoup](https://pypi.org/project/beautifulsoup4/). Information is queried by tags and class attributes and it's done in error-prone manner.
 
+Retrieving all reviews is tough. The app pretends to be a real user, by supplying request headers directly copy-pasted from a browser. Pretty sure [Ceneo.pl](https://ceneo.pl) does checks for session cookie if the user requests more pages.
+
 ## Libraries
 
 See: [libraries](libraries).
