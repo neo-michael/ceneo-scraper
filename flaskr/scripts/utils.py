@@ -17,6 +17,11 @@ def mark2html(markdown_file, locale):
 
     return markdown.markdown(md_contents)
 
+def read_json_str(file_path):
+    with open(file_path, 'r', encoding="utf-8") as fp:
+        return fp.read().replace('"', r'\"')
+    
+
 def get_locale():
     if "lang" in request.cookies:
         return request.cookies.get("lang")

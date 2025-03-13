@@ -1,5 +1,54 @@
 {% extends "base.html" %}
 
-{% block content %}
+{% block head %}
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='ext/tabulator/css/tabulator_modern.min.css' )}}"
+    />
 
+    <script src="{{ url_for('static', filename='ext/tabulator/js/tabulator.min.js') }}"></script>
+{% endblock head %}
+
+{% block content %}
+    <div class="reviews-table-parent">
+        <div id="reviews-table"></div>
+    </div>
+    <script>
+        const products = JSON.parse("{{ products|safe }}")
+
+        const table = new Tabulator("#reviews-table", {
+            data: products,
+            layout: "fitColumns",
+            layout: "fitData",
+            addRowPos: "top",
+            pagination: "local",
+            paginationSize: 10,
+            paginationCounter: "rows",
+            movableColumns: true,
+            columns: [
+                { title: "Id", field: "id", headerFilter: "input",
+                    formatter: (cell) => {
+                        const row_data = cell.getData()
+                        const id = row_data["id"]
+                        const name = cell.getValue()
+                        const baseUrl = "{{ url_for('product.product', product_id='__REPLACE_ME__') }}"
+                        const finalUrl = baseUrl.replace("__REPLACE_ME__", id)
+                        return `<a href="${finalUrl}">${id}</a>`
+                    }
+                },
+                { title: "Name", field: "name", headerFilter: "input",
+                    formatter: (cell) => {
+                        const row_data = cell.getData()
+                        const id = row_data["id"]
+                        const name = cell.getValue()
+                        return `<a href="https://ceneo.pl/${id}">${name}</a>`
+                    }
+                },
+                { title: "Review Count", field: "review_count", headerFilter: "input" },
+                { title: "Average Score", field: "avg_score", headerFilter: "input" },
+                { title: "Pros Count", field: "pros_count", headerFilter: "input" },
+                { title: "Cons Count", field: "cons_count", headerFilter: "input" },
+            ]
+        })
+    </script>
 {% endblock content %}

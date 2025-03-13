@@ -34,11 +34,11 @@ def create_app(test_config=None):
         response.set_cookie("lang", lang)
         return response
     
-    from . import description
-    from . import product
+    from . import description_blueprint
+    from . import product_blueprint
 
-    app.register_blueprint(description.bp)
-    app.register_blueprint(product.bp)
+    app.register_blueprint(description_blueprint.bp)
+    app.register_blueprint(product_blueprint.bp)
 
     app.jinja_env.globals.update(get_locale=get_locale)
     app.jinja_env.globals.update(get_locales=lambda: app.config["LANGUAGES"])

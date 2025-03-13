@@ -5,7 +5,6 @@ class Review:
         self.id = ""
         self.author = ""
         self.recommend = False
-        # self.is_ai_highlight = False
         self.stars = 1.0
         self.published_datetime = ""
         self.purchase_datatime = ""
@@ -18,7 +17,6 @@ class Review:
         self.images = []
         self.pros = []
         self.cons = []
-        self.comments = []
 
     def to_json_str(self):
         return json.dumps(self, default=lambda o: o.__dict__, ensure_ascii=False)

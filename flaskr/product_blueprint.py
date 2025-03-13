@@ -1,17 +1,23 @@
+import glob
+
 from flask import Blueprint
 from flask import render_template, redirect, request, url_for, make_response
 
 from os import path
 from flask_babel import _
 
+from .scripts.utils import read_json_str
 from .scripts import extractor
-
 
 bp = Blueprint("product", __name__, url_prefix="/product")
 
 @bp.route("/product_list", methods=("GET",))
 def product_list():
-    return render_template("product/product_list.html")
+    prod_list = []
+    for product_file in glob.glob("./products/*.json"):
+        prod_list.append(read_json_str(product_file))
+    prod_list_as_str = f"[{','.join(prod_list)}]"
+    return render_template("product/product_list.html", products=prod_list_as_str)
 
 
 @bp.route("/extract", methods=("GET", "POST"))
@@ -41,10 +47,9 @@ async def extract():
 
 @bp.route("/<product_id>", methods=("GET", ))
 def product(product_id):
-    with open(f"./reviews/{product_id}.json", encoding="utf-8") as fp:
-        reviews = fp.read()
-
-    return render_template("product/product.html", reviews=reviews.replace('\n', '\\\n').replace('"', r'\"').replace('\\n', '\\\\n'))
+    reviews = read_json_str(f"./reviews/{product_id}.json")
+    
+    return render_template("product/product.html", reviews=reviews)
 
 
 def is_valid_product_id(str):

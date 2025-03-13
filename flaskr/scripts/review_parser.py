@@ -24,6 +24,8 @@ class ReviewParser:
 
         review.images = self._parse_images(content)
 
+        review.pros, review.cons = self._parse_pros_and_cons(content)
+
         return review
 
     def _parse_author(self, content):
@@ -106,7 +108,7 @@ class ReviewParser:
             return ""
 
         # replace the quote to prevent unexpeted string escaping
-        return tag.text.strip().replace('"', '\u201c')
+        return tag.text.strip().replace('"', '\u201c').replace('\n', r'\\n')
     
 
     def _parse_verified(self, content):
@@ -132,4 +134,23 @@ class ReviewParser:
 
             result.append(link["href"])
 
+        return result
+
+    def _parse_pros_and_cons(self, content):
+        tag = content.find("div", class_="review-feature")
+        if not tag:
+            return ([], [])
+        
+        pros_tags = tag.find_all("div", class_="review-feature__item review-feature__item--positive")
+        cons_tags = tag.find_all("div", class_="review-feature__item review-feature__item--negative")
+
+        pros = self._parse_trait(pros_tags)
+        cons = self._parse_trait(cons_tags)
+
+        return (pros, cons)
+                      
+    def _parse_trait(self, tags):
+        result = []
+        for tag in tags:
+            result.append(tag.text.strip())
         return result

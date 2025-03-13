@@ -15,9 +15,9 @@
         <div id="reviews-table"></div>
     </div>
     <script>
-        var tabledata = JSON.parse("{{ reviews | safe }}")
+        const tabledata = JSON.parse("{{ reviews | safe }}")
 
-        var table = new Tabulator("#reviews-table", {
+        const table = new Tabulator("#reviews-table", {
             data: tabledata,
             layout: "fitColumns",
             layout: "fitData",
@@ -34,9 +34,8 @@
                 { title: "Author", field: "author", headerFilter: "input" },
                 { title: "Recommend", field: "recommend", headerFilter: "input", 
                     formatter: (cell) => {
-                        console.log(cell.getValue())
-                        return cell.getValue() ? "Yes" : "No";
-                    } 
+                        return cell.getValue() ? "true" : "false";
+                    }
                 },
                 { title: "Stars", field: "stars", headerFilter: "input", formatter: "star" },
                 { title: "Publish date", field: "published_datetime", headerFilter: "input" },

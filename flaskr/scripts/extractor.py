@@ -4,12 +4,21 @@ import json
 from bs4 import BeautifulSoup
 from flask import current_app
 
+from ..models.product import Product
 from .review_parser import ReviewParser
 
 
 async def save_reviews_to_json(product_id):
-    reviews = await _fetch_reviews(product_id)
+    reviews, product = await _fetch_reviews(product_id)
+    
+    product.id = product_id
 
+    for review in reviews:
+        product.pros_count += len(review.pros)
+        product.cons_count += len(review.cons)
+    with open(f"./products/{product_id}.json", 'w') as fp2:
+        fp2.write(product.to_json_str())
+    
     with open(f"./reviews/{product_id}.json", "w") as fp:
         fp.write("[")
         fp.write(",".join((rev.to_json_str() for rev in reviews)))
@@ -19,45 +28,62 @@ async def save_reviews_to_json(product_id):
 async def _fetch_reviews(product_id):
     base_url = "https://www.ceneo.pl"
     location = f"/{product_id}#tab=reviews"
+    max_pages = 50
 
     reviews = []
+    product = None
+    is_first_page = True
+    page = 1
 
-    async with httpx.AsyncClient(
-        headers=current_app.config["HEADERS"],
-        http2=True,
-        follow_redirects=True,
-    ) as client:
-
-        page = 1
-
-        # Ceneo only shows maximum of 50 pages
-        while page <= 50:
+    async with httpx.AsyncClient(**current_app.config["HTTP_CONFIG"]) as client:
+        while page <= max_pages:
             print(f"Fetching page {page}")
             response = await client.get(base_url + location)
-            (new_reviews, next_location) = parse_reviews(response.text)
+            new_reviews, next_location, product_info = parse_reviews(response.text, is_first_page)
 
-            reviews += new_reviews
+            reviews.extend(new_reviews)
+
+            if is_first_page:
+                product = product_info
+                is_first_page = False
+
             if not next_location:
                 break
 
             location = next_location
             page += 1
 
-    return reviews
+    return (reviews, product)
 
 
-def parse_reviews(contents):
+def parse_reviews(contents, is_first_page):
     reviews = []
+    product = Product() if is_first_page else None
 
     document = BeautifulSoup(contents, "lxml")
 
-    # Contains all reviews on the page
+    if is_first_page:
+        name_tag = document.find("div", class_="js_searchInGoogleTooltip breadcrumbs__item")
+
+        if name_tag:
+            product.name = name_tag.text.strip()
+        
+        avg_score_tag = document.find("span", class_="product-review__score", content=True)
+        if avg_score_tag:
+            product.avg_score = float(avg_score_tag["content"].strip())
+        
+        review_count_tag = document.find("a", class_="product-review__link link link--accent js_reviews-link js_clickHash js_seoUrl")
+        if review_count_tag:
+            span = review_count_tag.find("span")
+            if span:
+                product.review_count = int(span.text.strip())
+
     review_div = document.find(
         "div", class_="js_product-reviews js_reviews-hook js_product-reviews-container"
     )
 
     if not review_div:
-        return (reviews, "")
+        return (reviews, "", product)
 
     reviews_tag = review_div.find_all(
         "div", class_="user-post user-post__card js_product-review"
@@ -72,6 +98,6 @@ def parse_reviews(contents):
     )
 
     if not next_location:
-        return (reviews, "")
+        return (reviews, "", product)
 
-    return (reviews, next_location["href"])
+    return (reviews, next_location["href"], product)
