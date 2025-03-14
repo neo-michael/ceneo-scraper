@@ -2,10 +2,11 @@ import httpx
 import json
 
 from bs4 import BeautifulSoup
-from flask import current_app
+from flask import current_app, url_for
 
 from ..models.product import Product
 from .review_parser import ReviewParser
+from ..scripts.utils import convert_to_csv, convert_to_xlsx
 
 
 async def save_reviews_to_json(product_id):
@@ -16,6 +17,11 @@ async def save_reviews_to_json(product_id):
     for review in reviews:
         product.pros_count += len(review.pros)
         product.cons_count += len(review.cons)
+
+    product.json = url_for("product.download", product_id=product_id, ext="json")
+    product.csv = url_for("product.download", product_id=product_id, ext="csv")
+    product.xlsx = url_for("product.download", product_id=product_id, ext="xlsx")
+
     with open(f"./products/{product_id}.json", 'w') as fp2:
         fp2.write(product.to_json_str())
     
@@ -23,7 +29,9 @@ async def save_reviews_to_json(product_id):
         fp.write("[")
         fp.write(",".join((rev.to_json_str() for rev in reviews)))
         fp.write("]")
-
+    
+    convert_to_csv(reviews, f"./reviews/{product_id}.csv")
+    convert_to_xlsx(f"./reviews/{product_id}.csv", f"./reviews/{product_id}.xlsx")
 
 async def _fetch_reviews(product_id):
     base_url = "https://www.ceneo.pl"

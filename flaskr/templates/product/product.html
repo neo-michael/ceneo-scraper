@@ -1,13 +1,52 @@
 {% extends "base.html" %}
 
 {% block head %}
-  <link
-    rel="stylesheet"
-    href="{{ url_for('static', filename='ext/tabulator/css/tabulator_modern.min.css' )}}"
-  />
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='ext/tabulator/css/tabulator_modern.min.css' )}}"
+    />
 
-  <script src="{{ url_for('static', filename='ext/tabulator/js/tabulator.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='ext/tabulator/js/tabulator.min.js') }}"></script>
+    <script>
+        const text_formatter = (cell, max = 50) => {
+            const fullText = cell.getValue() || ""
+            const shortText = fullText.length > max ? fullText.substring(0, max) + "…" : fullText
 
+            return `
+            <div class="text-wrapper short" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                ${shortText}
+            </div>
+            <div class="text-wrapper full" style="display: none; white-space: normal; word-break: break-word;">
+                ${fullText}
+            </div>
+            `
+        }
+
+        const text_cell_click_handler = (e, cell) => {
+            const el = cell.getElement()
+            const shortEl = el.querySelector('.text-wrapper.short')
+            const fullEl = el.querySelector('.text-wrapper.full')
+
+            const isExpanded = fullEl.style.display !== "none"
+
+            if (isExpanded) {
+                shortEl.style.display = "block"
+                fullEl.style.display = "none"
+
+                cell.getRow().normalizeHeight()
+            } else {
+                shortEl.style.display = "none"
+                fullEl.style.display = "block"
+
+                cell.getRow().normalizeHeight()
+
+                const rowEl = cell.getRow().getElement()
+                rowEl.scrollIntoView({ behavior: "smooth", block: "nearest" })
+            }
+
+            e.stopPropagation();
+        }
+    </script>
 {% endblock head %}
 
 {% block content %}
@@ -17,10 +56,15 @@
     <script>
         const tabledata = JSON.parse("{{ reviews | safe }}")
 
-        const table = new Tabulator("#reviews-table", {
+        for (let review of tabledata) {
+            review.pros = review.pros.join(", ")
+            review.cons = review.cons.join(", ")
+        }
+
+
+        var table = new Tabulator("#reviews-table", {
             data: tabledata,
             layout: "fitColumns",
-            layout: "fitData",
             addRowPos: "top",
             pagination: "local",
             paginationSize: 10,
@@ -30,18 +74,37 @@
                 tooltip: true,
             },
             columns: [
-                { title: "Id", field: "id", headerFilter: "input" },
-                { title: "Author", field: "author", headerFilter: "input" },
-                { title: "Recommend", field: "recommend", headerFilter: "input", 
+                { title: "{{ _('Id') }}", field: "id", headerFilter: "input", width: 100 },
+                { title: "{{ _('Author') }}", field: "author", headerFilter: "input", width: 100,
+                    formatter: (cell) => text_formatter(cell, 12),
+                    cellClick: text_cell_click_handler 
+                },
+                { title: "{{ _('Recommend') }}", field: "recommend", headerFilter: "tickCross", width: 145,
                     formatter: (cell) => {
                         return cell.getValue() ? "true" : "false";
                     }
                 },
-                { title: "Stars", field: "stars", headerFilter: "input", formatter: "star" },
-                { title: "Publish date", field: "published_datetime", headerFilter: "input" },
-                { title: "Likes", field: "likes", headerFilter: "input" },
-                { title: "Disikes", field: "dislikes", headerFilter: "input" }
+                { title: "{{ _('Stars') }}", field: "stars", headerFilter: "input", formatter: "star", width: 100},
+                { title: "{{ _('Is Verified') }}", field: "is_verified", headerFilter: "tickCross", width: 160},
+                { title: "{{ _('Publish Date') }}", field: "published_datetime", headerFilter: "input", width: 200},
+                { title: "{{ _('Purchase Date') }}", field: "purchase_datatime", headerFilter: "input" },
+                { title: "{{ _('Likes') }}", field: "likes", headerFilter: "number", width: 100 },
+                { title: "{{ _('Disikes') }}", field: "dislikes", headerFilter: "number", width: 100},
+                { title: "{{ _('Text') }}", field: "text", headerFilter: "input", width: 300,
+                    formatter: text_formatter,
+                    cellClick: text_cell_click_handler
+                },
+                { title: "{{ _('Pros') }}", field: "pros", headerFilter: "input",
+                    formatter: text_formatter,
+                    cellClick: text_cell_click_handler
+                },
+                { title: "{{ _('Cons') }}", field: "cons", headerFilter: "input",
+                    formatter: text_formatter,
+                    cellClick: text_cell_click_handler
+                }
             ]
         });
+
     </script>
 {% endblock content %}
+

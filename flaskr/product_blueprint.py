@@ -1,7 +1,7 @@
 import glob
 
 from flask import Blueprint
-from flask import render_template, redirect, request, url_for, make_response
+from flask import render_template, redirect, request, send_file, url_for, make_response
 
 from os import path
 from flask_babel import _
@@ -51,6 +51,10 @@ def product(product_id):
     
     return render_template("product/product.html", reviews=reviews)
 
+
+@bp.route("/<product_id>/<ext>", methods=("GET",))
+def download(product_id, ext):
+    return send_file(f"../reviews/{product_id}.{ext}", as_attachment=True)
 
 def is_valid_product_id(str):
     return str.isdigit()

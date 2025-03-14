@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-03-12 22:55+0100\n"
+"POT-Creation-Date: 2025-03-13 21:44+0100\n"
 "PO-Revision-Date: 2025-03-11 20:48+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: pl\n"
@@ -19,11 +19,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.17.0\n"
 
-#: flaskr/product.py:28
+#: flaskr/product_blueprint.py:34
 msgid "Product id should only contain digits."
 msgstr "Id produktu powinno zawierać tylko cyfry."
 
-#: flaskr/product.py:38
+#: flaskr/product_blueprint.py:44
 msgid "Unexpected error occured. Please report it to the site owner."
 msgstr "Wystąpił nieoczekiwany błąd. Proszę zgłoś go właścielowi strony"
 
@@ -55,4 +55,73 @@ msgstr "Ekstraktuj"
 #: flaskr/templates/product/extract.html:28
 msgid "Product Id"
 msgstr "Id produktu"
+
+#: flaskr/templates/product/product.html:33
+#: flaskr/templates/product/product_list.html:29
+msgid "Id"
+msgstr "Id"
+
+#: flaskr/templates/product/product.html:34
+msgid "Author"
+msgstr "Autor"
+
+#: flaskr/templates/product/product.html:35
+msgid "Recommend"
+msgstr "Poleca?"
+
+#: flaskr/templates/product/product.html:40
+msgid "Stars"
+msgstr "Ocena"
+
+#: flaskr/templates/product/product.html:41
+msgid "Is Verified"
+msgstr "Potwierdzona"
+
+#: flaskr/templates/product/product.html:42
+msgid "Publish Date"
+msgstr "Data Wystawienia"
+
+#: flaskr/templates/product/product.html:43
+msgid "Purchase Date"
+msgstr "Data zakupu"
+
+#: flaskr/templates/product/product.html:44
+msgid "Likes"
+msgstr "Polubienia"
+
+#: flaskr/templates/product/product.html:45
+msgid "Disikes"
+msgstr "Niepolubienia"
+
+#: flaskr/templates/product/product.html:46
+msgid "Text"
+msgstr "Treść"
+
+#: flaskr/templates/product/product.html:82
+msgid "Pros"
+msgstr "Zalety"
+
+#: flaskr/templates/product/product.html:83
+msgid "Cons"
+msgstr "Wady"
+
+#: flaskr/templates/product/product_list.html:39
+msgid "Name"
+msgstr "Nazwa"
+
+#: flaskr/templates/product/product_list.html:47
+msgid "Review Count"
+msgstr "Liczba opinii"
+
+#: flaskr/templates/product/product_list.html:48
+msgid "Average Score"
+msgstr "Średnia ocena"
+
+#: flaskr/templates/product/product_list.html:49
+msgid "Pros Count"
+msgstr "Ilość zalet"
+
+#: flaskr/templates/product/product_list.html:50
+msgid "Cons Count"
+msgstr "Ilość wad"
 
