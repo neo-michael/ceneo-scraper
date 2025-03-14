@@ -7,6 +7,13 @@
     />
 
     <script src="{{ url_for('static', filename='ext/tabulator/js/tabulator.min.js') }}"></script>
+
+    <script>
+        const download_formatter = (cell) => {
+            const url = cell.getValue()
+            return `<button class="url-button" onclick="window.open('${url}', '_blank')">Download</button>`
+        }
+    </script>
 {% endblock head %}
 
 {% block content %}
@@ -26,7 +33,7 @@
             paginationCounter: "rows",
             movableColumns: true,
             columns: [
-                { title: "Id", field: "id", headerFilter: "input",
+                { title: "{{ _('Id') }}", field: "id", headerFilter: "input",
                     formatter: (cell) => {
                         const row_data = cell.getData()
                         const id = row_data["id"]
@@ -36,7 +43,7 @@
                         return `<a href="${finalUrl}">${id}</a>`
                     }
                 },
-                { title: "Name", field: "name", headerFilter: "input",
+                { title: "{{ _('Name') }}", field: "name", headerFilter: "input",
                     formatter: (cell) => {
                         const row_data = cell.getData()
                         const id = row_data["id"]
@@ -44,10 +51,19 @@
                         return `<a href="https://ceneo.pl/${id}">${name}</a>`
                     }
                 },
-                { title: "Review Count", field: "review_count", headerFilter: "input" },
-                { title: "Average Score", field: "avg_score", headerFilter: "input" },
-                { title: "Pros Count", field: "pros_count", headerFilter: "input" },
-                { title: "Cons Count", field: "cons_count", headerFilter: "input" },
+                { title: "{{ _('Review Count') }}", field: "review_count", headerFilter: "input" },
+                { title: "{{ _('Average Score') }}", field: "avg_score", headerFilter: "input" },
+                { title: "{{ _('Pros Count') }}", field: "pros_count", headerFilter: "input" },
+                { title: "{{ _('Cons Count') }}", field: "cons_count", headerFilter: "input" },
+                { title: "JSON", field: "json", headerFilter: "input",
+                    formatter: download_formatter
+                },
+                { title: "CSV", field: "csv", headerFilter: "input",
+                    formatter: download_formatter
+                },
+                { title: "XLSX", field: "xlsx", headerFilter: "input",
+                    formatter: download_formatter 
+                },
             ]
         })
     </script>
