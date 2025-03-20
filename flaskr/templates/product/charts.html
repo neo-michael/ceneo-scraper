@@ -23,7 +23,7 @@
 
 {% block content %}
     <div class="buttons-wrapper">
-        <button class="download-button-alt">Back To Reviews</button>
+        <button class="download-button-alt"><a class="link-no-style" href="{{ url_for('product.product', product_id=request.view_args['product_id']) }}">{{ _('Back To Reviews') }}</a></button>
         <span class="sep"></span>
         <h1>{{ name }}</h1>
     </div>
@@ -45,13 +45,13 @@
         const pieChart = createChart("pie-chart", "pie", recommendChartData, (tooltipItem) => {
             let label = tooltipItem.label || ""
             if (label) {
-                label += ": " + tooltipItem.raw + " reviews"
+                label += ": " + tooltipItem.raw + " {{ _('reviews') }}"
             }
             return label
         })
 
 
-        const ratingLabels = ['1', '1.5', '2', '2.5', '3', '3.5', '4', '4.5', '5']
+        const ratingLabels = ["1", "1.5", "2", "2.5", "3", "3.5", "4", "4.5", "5"]
         const ratingData = new Array(ratingLabels.length).fill(0)
 
         reviewData.forEach(review => {
@@ -66,7 +66,7 @@
         ]
 
         const ratingChartData = createChartData(ratingLabels, ratingData, {
-            label: 'Number of Reviews',
+            label: "{{ _('Number of Reviews') }}",
             data: ratingData,
             backgroundColor: ratingColors,
             borderColor: ratingColors,
@@ -75,20 +75,20 @@
 
         const barChart = createChart("bar-chart", "bar", ratingChartData, 
             (tooltipItem) => {
-                return tooltipItem.raw + ' reviews'
+                return tooltipItem.raw + " {{ _('reviews') }}"
             },
             {
                 y: {
                     beginAtZero: true,
                     title: {
                         display: true,
-                        text: 'Number of Reviews'
+                        text: "{{ _('Number of Reviews') }}"
                     }
                 },
                 x: {
                     title: {
                         display: true,
-                        text: 'Rating'
+                        text: "{{ _('Rating') }}"
                     }
                 }
             }, 
@@ -97,4 +97,4 @@
             },
         )
     </script>
-{% endblock content %}
+{% endblock content %} 

@@ -4,7 +4,7 @@
 
 Studiuję Informatykę Stosowaną na Uniwersytecie Ekonomicznym w Krakowie.
 
-## Projects
+## Projekty
 
 - ### Ceneo Skraper (cSkrapy)
 To narzędzie, które zbierania opinii o produkcie z [Ceneo](Ceneo.pl) do dalszej analizy i wizualizacji.

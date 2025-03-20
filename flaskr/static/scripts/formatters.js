@@ -40,11 +40,6 @@ const text_cell_click_handler = (e, cell) => {
     e.stopPropagation();
 }
 
-const download_formatter = (cell) => {
-    const url = cell.getValue()
-    return `<button class="download-button-alt" onclick="window.open('${url}', '_blank')">Download</button>`
-}
-
 const title_formatter = (cell) => {
     const row_data = cell.getData()
     const id = row_data["id"]

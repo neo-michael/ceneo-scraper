@@ -15,7 +15,7 @@ pybabel init -i messages.pot -d flaskr/translations -l pl
 ## Compiling translation file
 
 ```
-pybabel compile -d flaskr/translations
+pybabel compile -f -d flaskr/translations
 ```
 
 ## Updating exisiting translation file

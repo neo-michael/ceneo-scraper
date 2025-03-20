@@ -10,12 +10,17 @@
     <script src="{{ url_for('static', filename='scripts/formatters.js') }}"></script>
     <script src="{{ url_for('static', filename='scripts/table.js') }}"></script>
     <script>
+        const download_formatter = (cell) => {
+            const url = cell.getValue()
+            return `<button class="download-button-alt" onclick="window.open('${url}', '_blank')">{{ _('Download') }}</button>`
+        }
+        
         const delete_formatter = (cell) => {
             const row_data = cell.getData()
             const id = row_data["id"]
             const baseUrl = "{{ url_for('product.delete', product_id='__REPLACE_ME__')}}"
             const finalURL = baseUrl.replace("__REPLACE_ME__", id)
-            return `<button class="delete-button"><a class="link-no-style" href=${finalURL}>DELETE</a></button>`
+            return `<button class="delete-button"><a class="link-no-style" href=${finalURL}>{{ _('DELETE') }}</a></button>`
         }
 
         const id_formatter = (cell) => {

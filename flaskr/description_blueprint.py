@@ -26,8 +26,13 @@ def handle_file(file_name):
                 libs.append(name)
 
         return render_template("description/index.html", text=render_template("description/libraries.html", libs=libs))
+    
+    delim_pos = file_name.find('.')
+    dash_pos = file_name.find('-')
+    if not dash_pos == -1 and dash_pos < delim_pos:
+        delim_pos = dash_pos
 
-    if not file_name in ("README.md", "WIKI.md"):
+    if not file_name[: delim_pos] in ("README", "WIKI"):
         return redirect(url_for("description.index"))
     
-    return render_template("description/index.html", text=mark2html(file_name[:-3], get_locale()))
+    return render_template("description/index.html", text=mark2html(file_name[:delim_pos], get_locale()))
