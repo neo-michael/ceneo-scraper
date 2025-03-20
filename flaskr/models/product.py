@@ -8,9 +8,11 @@ class Product():
         self.avg_score = 0.0
         self.pros_count = 0
         self.cons_count = 0
-        self.csv = ""
-        self.json = ""
-        self.xlsx = ""
+        self.csv_url = ""
+        self.json_url = ""
+        self.xlsx_url = ""
     
     def to_json_str(self):
         return json.dumps(self, default=lambda o: o.__dict__, ensure_ascii=False)
+
+    # TODO: implement static from_json_file()

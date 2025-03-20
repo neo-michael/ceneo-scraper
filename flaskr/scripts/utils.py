@@ -1,9 +1,11 @@
+from flask import current_app, request
+from pathlib import Path
+from os import path
+
 import markdown
 import pandas
+import json
 import csv
-
-from flask import current_app, request, session
-from os import path
 
 
 def mark2html(markdown_file, locale):
@@ -20,11 +22,25 @@ def mark2html(markdown_file, locale):
     return markdown.markdown(md_contents)
 
 
+def ensure_dir_exists(dir_path):
+    Path(dir_path).mkdir(parents=True, exist_ok=True)
+
+
 def read_json_str(file_path):
     with open(file_path, 'r', encoding="utf-8") as fp:
         return fp.read().replace('"', r'\"')
 
-    
+
+def read_json(file_path):
+    with open(file_path, 'r', encoding="utf-8") as fp:
+        return json.load(fp)
+
+
+def write_json_str(file_path, data):
+    with open(file_path, 'w') as fp:
+        fp.write(data)
+
+
 def convert_to_csv(data, filename):
     with open(filename, mode='w', newline='') as file:
         writer = csv.writer(file)
@@ -49,3 +65,15 @@ def get_locale():
         return request.cookies.get("lang")
     
     return request.accept_languages.best_match(current_app.config["LANGUAGES"])
+
+
+
+CONTROL_CHARACTERS = ''.join(chr(i) for i in range(32))
+ESCAPE_TABLE = str.maketrans({
+    '"': '\u201c',
+    "'": '\u201c',
+    **{ char: None for char in CONTROL_CHARACTERS } 
+})
+
+def escape_string(text):
+    return text.translate(ESCAPE_TABLE)

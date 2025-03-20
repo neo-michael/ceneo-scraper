@@ -1,4 +1,5 @@
 from ..models.review import Review
+from .utils import escape_string
 
 class ReviewParser:
 
@@ -21,7 +22,6 @@ class ReviewParser:
         review.origin = self._parse_origin(content)
         review.text = self._parse_text(content)
         review.is_verified = self._parse_verified(content)
-
         review.images = self._parse_images(content)
 
         review.pros, review.cons = self._parse_pros_and_cons(content)
@@ -33,7 +33,7 @@ class ReviewParser:
         if not tag:
             return ""
 
-        return tag.text.strip()
+        return escape_string(tag.text).strip()
 
     def _parse_recommend(self, content):
         tag = content.find("span", class_="user-post__author-recomendation")
@@ -92,13 +92,13 @@ class ReviewParser:
         if not tag:
             return result
 
-        result += tag.text
+        result += escape_string(tag.text)
 
         strong_tag = tag.find("strong")
         if not strong_tag:
             return result
 
-        result += strong_tag.text
+        result += escape_string(strong_tag.text)
 
         return result.strip()
 
@@ -108,7 +108,8 @@ class ReviewParser:
             return ""
 
         # replace the quote to prevent unexpeted string escaping
-        return tag.text.strip().replace('"', '\u201c').replace('\n', '').replace('\r', '')
+        #return tag.text.strip().replace('"', '\u201c').replace('\n', '').replace('\r', '')
+        return escape_string(tag.text).strip()
     
 
     def _parse_verified(self, content):
@@ -152,5 +153,5 @@ class ReviewParser:
     def _parse_trait(self, tags):
         result = []
         for tag in tags:
-            result.append(tag.text.strip())
+            result.append(escape_string(tag.text).strip())
         return result

@@ -1,5 +1,5 @@
+from flask import redirect, render_template, url_for
 from flask import Blueprint
-from flask import make_response, redirect, render_template, request, url_for
 
 from .scripts.utils import mark2html, get_locale
 
@@ -13,7 +13,7 @@ def index():
 
 @bp.route("/about", methods=("GET",))
 def about():
-    return render_template("description/about.html")
+    return render_template("description/about.html", text=mark2html("./AUTHOR", get_locale()))
 
 
 @bp.route("/<file_name>", methods=("GET", "POST"))

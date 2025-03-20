@@ -1,0 +1,11 @@
+.text-wrapper.short {
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis;
+}
+
+.text-wrapper.full {
+    display: none;
+    white-space: normal;
+    word-break: break-word;
+}

@@ -7,64 +7,50 @@
     />
 
     <script src="{{ url_for('static', filename='ext/tabulator/js/tabulator.min.js') }}"></script>
-
+    <script src="{{ url_for('static', filename='scripts/formatters.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/table.js') }}"></script>
     <script>
-        const download_formatter = (cell) => {
-            const url = cell.getValue()
-            return `<button class="url-button" onclick="window.open('${url}', '_blank')">Download</button>`
+        const delete_formatter = (cell) => {
+            const row_data = cell.getData()
+            const id = row_data["id"]
+            const baseUrl = "{{ url_for('product.delete', product_id='__REPLACE_ME__')}}"
+            const finalURL = baseUrl.replace("__REPLACE_ME__", id)
+            return `<button class="delete-button"><a class="link-no-style" href=${finalURL}>DELETE</a></button>`
+        }
+
+        const id_formatter = (cell) => {
+            const row_data = cell.getData()
+            const id = row_data["id"]
+            const baseUrl = "{{ url_for('product.product', product_id='__REPLACE_ME__') }}"
+            const finalUrl = baseUrl.replace("__REPLACE_ME__", id)
+            return `<a href="${finalUrl}">${id}</a>`
         }
     </script>
 {% endblock head %}
 
 {% block content %}
-    <div class="reviews-table-parent">
+    <div class="reviews-table-parent padded">
         <div id="reviews-table"></div>
     </div>
     <script>
-        const products = JSON.parse("{{ products|safe }}")
+        let products = JSON.parse("{{ products | safe }}")
 
-        const table = new Tabulator("#reviews-table", {
-            data: products,
-            layout: "fitColumns",
-            layout: "fitData",
-            addRowPos: "top",
-            pagination: "local",
-            paginationSize: 10,
-            paginationCounter: "rows",
-            movableColumns: true,
-            columns: [
-                { title: "{{ _('Id') }}", field: "id", headerFilter: "input",
-                    formatter: (cell) => {
-                        const row_data = cell.getData()
-                        const id = row_data["id"]
-                        const name = cell.getValue()
-                        const baseUrl = "{{ url_for('product.product', product_id='__REPLACE_ME__') }}"
-                        const finalUrl = baseUrl.replace("__REPLACE_ME__", id)
-                        return `<a href="${finalUrl}">${id}</a>`
-                    }
-                },
-                { title: "{{ _('Name') }}", field: "name", headerFilter: "input",
-                    formatter: (cell) => {
-                        const row_data = cell.getData()
-                        const id = row_data["id"]
-                        const name = cell.getValue()
-                        return `<a href="https://ceneo.pl/${id}" target="_blank">${name}</a>`
-                    }
-                },
-                { title: "{{ _('Review Count') }}", field: "review_count", headerFilter: "input" },
-                { title: "{{ _('Average Score') }}", field: "avg_score", headerFilter: "input" },
-                { title: "{{ _('Pros Count') }}", field: "pros_count", headerFilter: "input" },
-                { title: "{{ _('Cons Count') }}", field: "cons_count", headerFilter: "input" },
-                { title: "JSON", field: "json", headerFilter: "input",
-                    formatter: download_formatter
-                },
-                { title: "CSV", field: "csv", headerFilter: "input",
-                    formatter: download_formatter
-                },
-                { title: "XLSX", field: "xlsx", headerFilter: "input",
-                    formatter: download_formatter 
-                },
-            ]
+        products.forEach(obj => {
+            obj.delete_url = ""
         })
+
+        const table = createTable("#reviews-table", products, [
+            { title: "{{ _('Id') }}", field: "id", headerFilter: "input", hozAlign: "center", formatter: id_formatter },
+            { title: "{{ _('Name') }}", field: "name", headerFilter: "input", hozAlign: "center", formatter: title_formatter },
+            { title: "{{ _('Review Count') }}", field: "review_count", headerFilter: "input", hozAlign: "center" },
+            { title: "{{ _('Average Score') }}", field: "avg_score", headerFilter: "input", hozAlign: "center" },
+            { title: "{{ _('Pros Count') }}", field: "pros_count", headerFilter: "input", hozAlign: "center" },
+            { title: "{{ _('Cons Count') }}", field: "cons_count", headerFilter: "input", hozAlign: "center" },
+            { title: "JSON", field: "json_url", hozAlign: "center", formatter: download_formatter },
+            { title: "CSV", field: "csv_url", hozAlign: "center", formatter: download_formatter },
+            { title: "XLSX", field: "xlsx_url", hozAlign: "center", formatter: download_formatter },
+            { title: "{{ _('Delete' )}}", field: "delete_url", hozAlign: "center", formatter: delete_formatter },
+        ])
+       
     </script>
 {% endblock content %}

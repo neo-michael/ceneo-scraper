@@ -18,7 +18,7 @@
 {% endblock head %}
 
 {% block content %}
-    <div id="loader_overlay">
+    <div id="loader-overlay">
         <div class="loader"></div>
     </div>
 
@@ -28,7 +28,7 @@
                 <label for="product-id">{{ _("Product Id") }}:</label>
                 <input type="text" id="product-id" name="product_id">
             </div>
-            <button type="submit" onclick="toggle_loader(true)">{{ _("Extract") }}</button>
+            <button type="submit" onclick="toggleLoader(true)">{{ _("Extract") }}</button>
         </form>
     </div>
 {% endblock content %}

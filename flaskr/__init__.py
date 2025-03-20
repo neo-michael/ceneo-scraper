@@ -24,6 +24,7 @@ def create_app(test_config=None):
     def index():
         return redirect(url_for("description.index"))
 
+    # This is an elaborate way to change language of the site with preserved data
     @app.route("/set_language/<location>", methods=("POST",))
     def set_language(location):
         # Python's json library expexts double quotes instead of single :(
@@ -40,6 +41,7 @@ def create_app(test_config=None):
     app.register_blueprint(description_blueprint.bp)
     app.register_blueprint(product_blueprint.bp)
 
+    # This exposes functions to jinja's global space
     app.jinja_env.globals.update(get_locale=get_locale)
     app.jinja_env.globals.update(get_locales=lambda: app.config["LANGUAGES"])
     

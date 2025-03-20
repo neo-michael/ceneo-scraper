@@ -12,7 +12,51 @@ body {
 
 .reviews-table-parent {
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+}
+
+.padded {
     padding-top: 100px;
+}
+
+.download-button {
+    padding: 10px 20px;
+    background-color: #3759d7;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.download-button-alt {
+    padding: 5px 10px;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.delete-button {
+    padding: 5px 10px;
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.link-no-style {
+    all: unset;
+}
+
+.sep {
+    padding: 0px 20px;
 }
