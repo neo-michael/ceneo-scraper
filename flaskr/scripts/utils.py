@@ -1,9 +1,10 @@
 import markdown
+import pandas
 import csv
 
 from flask import current_app, request, session
 from os import path
-import pandas
+
 
 def mark2html(markdown_file, locale):
     localized_file = f"{markdown_file}-{locale}.md"
@@ -18,9 +19,11 @@ def mark2html(markdown_file, locale):
 
     return markdown.markdown(md_contents)
 
+
 def read_json_str(file_path):
     with open(file_path, 'r', encoding="utf-8") as fp:
         return fp.read().replace('"', r'\"')
+
     
 def convert_to_csv(data, filename):
     with open(filename, mode='w', newline='') as file:

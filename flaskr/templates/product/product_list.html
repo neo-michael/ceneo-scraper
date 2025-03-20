@@ -48,7 +48,7 @@
                         const row_data = cell.getData()
                         const id = row_data["id"]
                         const name = cell.getValue()
-                        return `<a href="https://ceneo.pl/${id}">${name}</a>`
+                        return `<a href="https://ceneo.pl/${id}" target="_blank">${name}</a>`
                     }
                 },
                 { title: "{{ _('Review Count') }}", field: "review_count", headerFilter: "input" },

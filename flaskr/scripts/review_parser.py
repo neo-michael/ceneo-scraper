@@ -108,7 +108,7 @@ class ReviewParser:
             return ""
 
         # replace the quote to prevent unexpeted string escaping
-        return tag.text.strip().replace('"', '\u201c').replace('\n', r'\\n')
+        return tag.text.strip().replace('"', '\u201c').replace('\n', '').replace('\r', '')
     
 
     def _parse_verified(self, content):

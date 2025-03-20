@@ -4,11 +4,12 @@ import json
 from bs4 import BeautifulSoup
 from flask import current_app, url_for
 
-from ..models.product import Product
 from .review_parser import ReviewParser
+
+from ..models.product import Product
 from ..scripts.utils import convert_to_csv, convert_to_xlsx
 
-
+# TODO: rename to save_review_to_file
 async def save_reviews_to_json(product_id):
     reviews, product = await _fetch_reviews(product_id)
     
@@ -66,46 +67,50 @@ async def _fetch_reviews(product_id):
 
 def parse_reviews(contents, is_first_page):
     reviews = []
-    product = Product() if is_first_page else None
+    product = None
 
     document = BeautifulSoup(contents, "lxml")
 
     if is_first_page:
-        name_tag = document.find("div", class_="js_searchInGoogleTooltip breadcrumbs__item")
+        product = _parse_product_info(document)
 
-        if name_tag:
-            product.name = name_tag.text.strip()
-        
-        avg_score_tag = document.find("span", class_="product-review__score", content=True)
-        if avg_score_tag:
-            product.avg_score = float(avg_score_tag["content"].strip())
-        
-        review_count_tag = document.find("a", class_="product-review__link link link--accent js_reviews-link js_clickHash js_seoUrl")
-        if review_count_tag:
-            span = review_count_tag.find("span")
-            if span:
-                product.review_count = int(span.text.strip())
-
-    review_div = document.find(
-        "div", class_="js_product-reviews js_reviews-hook js_product-reviews-container"
-    )
+    review_div = document.find(**current_app.config["FILTERS_FOR"]["review_block"])
 
     if not review_div:
         return (reviews, "", product)
 
-    reviews_tag = review_div.find_all(
-        "div", class_="user-post user-post__card js_product-review"
-    )
+    reviews_tag = review_div.find_all(**current_app.config["FILTERS_FOR"]["review"])
 
     review_parser = ReviewParser()
     for review in reviews_tag:
         reviews.append(review_parser.parse(review))
 
-    next_location = document.find(
-        "a", class_="pagination__item pagination__next", href=True
-    )
+    next_location = document.find(**current_app.config["FILTERS_FOR"]["next_location"])
 
     if not next_location:
         return (reviews, "", product)
 
     return (reviews, next_location["href"], product)
+
+def _parse_product_info(from_):
+    product = Product()
+
+    name_tag = from_.find(**current_app.config["FILTERS_FOR"]["name"])
+
+    if name_tag:
+        product.name = name_tag.text.strip()
+    
+    avg_score_tag = from_.find(**current_app.config["FILTERS_FOR"]["score"])
+    if avg_score_tag:
+        product.avg_score = float(avg_score_tag["content"].strip())
+    
+    review_count_tag = from_.find(**current_app.config["FILTERS_FOR"]["review_count"])
+    if review_count_tag:
+        span = review_count_tag.find("span")
+        if span:
+            product.review_count = int(span.text.strip())
+    
+    return product
+
+def _get_tag(from_, filter):
+    return from_.find(**current_app.config["FILTERS_FOR"][filter])
