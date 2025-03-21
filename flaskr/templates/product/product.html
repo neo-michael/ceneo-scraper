@@ -5,10 +5,16 @@
 {% endblock title %}
 
 {% block head %}
-    <link
-        rel="stylesheet"
-        href="{{ url_for('static', filename='ext/tabulator/css/tabulator_modern.min.css' ) }}"
+    <link 
+        rel="stylesheet" 
+        href="https://unpkg.com/tabulator-tables@6.3.1/dist/css/tabulator_modern.min.css" 
     />
+
+    <script 
+        type="text/javascript" 
+        src="https://unpkg.com/tabulator-tables@6.3.1/dist/js/tabulator.min.js"
+    ></script>
+
     <link
         rel="stylesheet"
         href="{{ url_for('static', filename='styles/review_text.css' ) }}"
@@ -17,7 +23,6 @@
         rel="stylesheet"
         href="{{ url_for('static', filename='styles/buttons.css' ) }}"
     />
-    <script src="{{ url_for('static', filename='ext/tabulator/js/tabulator.min.js') }}"></script>
     <script src="{{ url_for('static', filename='scripts/formatters.js') }}"></script>
     <script src="{{ url_for('static', filename='scripts/table.js') }}"></script>
 {% endblock head %}
@@ -36,6 +41,10 @@
         <div id="reviews-table"></div>
     </div>
     <script>
+        const bool_formatter = (cell) => {
+            return cell.getValue() ? "{{ _('Yes') }}" : "{{ _('No') }}";
+        }
+
         const tabledata = JSON.parse("{{ reviews | safe }}")
 
         for (let review of tabledata) {
@@ -53,7 +62,9 @@
                 formatter: bool_formatter
             },
             { title: "{{ _('Stars') }}", field: "stars", headerFilter: "input", hozAlign: "center", formatter: "star", width: 90 },
-            { title: "{{ _('Is Verified') }}", field: "is_verified", headerFilter: "input", hozAlign: "center", width: 160 },
+            { title: "{{ _('Is Verified') }}", field: "is_verified", headerFilter: "input", hozAlign: "center", width: 160,
+                formatter: bool_formatter
+            },
             { title: "{{ _('Publish Date') }}", field: "published_datetime", headerFilter: "input", hozAlign: "center", width: 190 },
             { title: "{{ _('Purchase Date') }}", field: "purchase_datatime", headerFilter: "input", hozAlign: "center", width: 190 },
             { title: "{{ _('Likes') }}", field: "likes", headerFilter: "number", hozAlign: "center", width: 100 },
@@ -70,7 +81,26 @@
                 formatter: text_formatter,
                 cellClick: text_cell_click_handler
             }
-        ])
+        ],
+        {
+            "page_size": "{{ _('Page Size') }}",
+            "page_title": "{{ _('Show Page') }}",
+            "first": "{{ _('First') }}",
+            "first_title": "{{ _('First Page') }}",
+            "last": "{{ _('Last') }}",
+            "last_title": "{{ _('Last Page') }}",
+            "prev": "{{ _('Prev') }}",
+            "prev_title": "{{ _('Prev Page') }}",
+            "next": "{{ _('Next') }}",
+            "next_title": "{{ _('Next Page') }}",
+            "all": "{{ _('All') }}",
+            "counter": {
+                "showing": "{{ _('Showing') }}",
+                "of": "{{ _('of') }}",
+                "rows": "{{ _('rows') }}",
+                "pages": "{{ _('pages') }}",
+            }
+        })
     </script>
 {% endblock content %}
 

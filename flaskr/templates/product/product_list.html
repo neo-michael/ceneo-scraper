@@ -1,12 +1,20 @@
 {% extends "base.html" %}
 
+{% block title %}
+    {{ _('Product List') }}
+{% endblock title %}
+
 {% block head %}
-    <link
-        rel="stylesheet"
-        href="{{ url_for('static', filename='ext/tabulator/css/tabulator_modern.min.css' )}}"
+    <link 
+        rel="stylesheet" 
+        href="https://unpkg.com/tabulator-tables@6.3.1/dist/css/tabulator_modern.min.css" 
     />
 
-    <script src="{{ url_for('static', filename='ext/tabulator/js/tabulator.min.js') }}"></script>
+    <script 
+        type="text/javascript" 
+        src="https://unpkg.com/tabulator-tables@6.3.1/dist/js/tabulator.min.js"
+    ></script>
+    
     <script src="{{ url_for('static', filename='scripts/formatters.js') }}"></script>
     <script src="{{ url_for('static', filename='scripts/table.js') }}"></script>
     <script>
@@ -45,17 +53,36 @@
         })
 
         const table = createTable("#reviews-table", products, [
-            { title: "{{ _('Id') }}", field: "id", headerFilter: "input", hozAlign: "center", formatter: id_formatter },
-            { title: "{{ _('Name') }}", field: "name", headerFilter: "input", hozAlign: "center", formatter: title_formatter },
-            { title: "{{ _('Review Count') }}", field: "review_count", headerFilter: "input", hozAlign: "center" },
-            { title: "{{ _('Average Score') }}", field: "avg_score", headerFilter: "input", hozAlign: "center" },
-            { title: "{{ _('Pros Count') }}", field: "pros_count", headerFilter: "input", hozAlign: "center" },
-            { title: "{{ _('Cons Count') }}", field: "cons_count", headerFilter: "input", hozAlign: "center" },
-            { title: "JSON", field: "json_url", hozAlign: "center", formatter: download_formatter },
-            { title: "CSV", field: "csv_url", hozAlign: "center", formatter: download_formatter },
-            { title: "XLSX", field: "xlsx_url", hozAlign: "center", formatter: download_formatter },
-            { title: "{{ _('Delete' )}}", field: "delete_url", hozAlign: "center", formatter: delete_formatter },
-        ])
+            { title: "{{ _('Id') }}", field: "id", headerFilter: "input", hozAlign: "center", formatter: id_formatter, width: 120 },
+            { title: "{{ _('Name') }}", field: "name", headerFilter: "input", formatter: title_formatter, width: 680 },
+            { title: "{{ _('Review Count') }}", field: "review_count", headerFilter: "input", hozAlign: "center", width: 180},
+            { title: "{{ _('Average Score') }}", field: "avg_score", headerFilter: "input", hozAlign: "center", width: 180},
+            { title: "{{ _('Pros Count') }}", field: "pros_count", headerFilter: "input", hozAlign: "center", width: 150 },
+            { title: "{{ _('Cons Count') }}", field: "cons_count", headerFilter: "input", hozAlign: "center", width: 150 },
+            { title: "JSON", field: "json_url", hozAlign: "center", formatter: download_formatter, width: 110 },
+            { title: "CSV", field: "csv_url", hozAlign: "center", formatter: download_formatter, width: 110 },
+            { title: "XLSX", field: "xlsx_url", hozAlign: "center", formatter: download_formatter, width: 110 },
+            { title: "{{ _('Delete' )}}", field: "delete_url", hozAlign: "center", formatter: delete_formatter, width: 100 },
+        ],
+        {
+            "page_size": "{{ _('Page Size') }}",
+            "page_title": "{{ _('Show Page') }}",
+            "first": "{{ _('First') }}",
+            "first_title": "{{ _('First Page') }}",
+            "last": "{{ _('Last') }}",
+            "last_title": "{{ _('Last Page') }}",
+            "prev": "{{ _('Prev') }}",
+            "prev_title": "{{ _('Prev Page') }}",
+            "next": "{{ _('Next') }}",
+            "next_title": "{{ _('Next Page') }}",
+            "all": "{{ _('All') }}",
+            "counter": {
+                "showing": "{{ _('Showing') }}",
+                "of": "{{ _('of') }}",
+                "rows": "{{ _('rows') }}",
+                "pages": "{{ _('pages') }}",
+            }
+        })
        
     </script>
 {% endblock content %}
