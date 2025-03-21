@@ -17,7 +17,7 @@ body {
 }
 
 .padded {
-    padding-top: 100px;
+    padding-top: 50px;
 }
 
 .download-button {
@@ -51,10 +51,6 @@ body {
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-}
-
-.link-no-style {
-    all: unset;
 }
 
 .sep {

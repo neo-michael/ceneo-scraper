@@ -4,7 +4,7 @@ const createTable = (tableId, data, columns, localization) => {
         layout: "fitColumns",
         addRowPos: "top",
         pagination: "local",
-        paginationSize: 18,
+        paginationSize: 15,
         paginationCounter: "rows",
         movableColumns: true,
         columnDefaults: {

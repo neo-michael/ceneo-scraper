@@ -26,7 +26,7 @@
         const id = row_data["id"]
         const baseUrl = "{{ url_for('product.delete', product_id='__REPLACE_ME__')}}"
         const finalURL = baseUrl.replace("__REPLACE_ME__", id)
-        return `<button class="delete-button"><a class="link-no-style" href=${finalURL}>{{ _('DELETE') }}</a></button>`
+        return `<button class="delete-button" onclick="window.open('${finalURL}', '_self')">{{ _('DELETE') }}</button>`
     }
 
     const idFormatter = (cell) => {

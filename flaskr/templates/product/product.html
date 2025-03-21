@@ -12,20 +12,26 @@
 <script type="text/javascript" src="https://unpkg.com/tabulator-tables@6.3.1/dist/js/tabulator.min.js"></script>
 <script src="{{ url_for('static', filename='scripts/formatters.js') }}"></script>
 <script src="{{ url_for('static', filename='scripts/table.js') }}"></script>
+<script>
+    const showGraphs = () => {
+        window.open("{{ url_for('product.charts', product_id=request.view_args['product_id']) }}", "_self")
+    }
+</script>
 {% endblock head %}
 
 {% block content %}
-<div class="buttons-wrapper">
+<div class="buttons-semi-wrapper">
+    <h1>{{ name }}</h1>
+</div>
+<div class="buttons-semi-wrapper">
     <div class="buttons">
         {% for ext in urls.keys() %}
         <button class="download-button" onclick="window.open('{{ urls[ext] }}', '_blank')">
             {{ _("Download") }} {{ ext }}
         </button>
         {% endfor %}
-        <button class="download-button">
-            <a class="link-no-style" href="{{ url_for('product.charts', product_id=request.view_args['product_id']) }}">
-                {{ _("Show graphs") }}
-            </a>
+        <button class="download-button green" onclick="showGraphs()">
+            {{ _("Show graphs") }}
         </button>
     </div>
 </div>

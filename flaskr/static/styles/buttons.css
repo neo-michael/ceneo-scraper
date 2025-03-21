@@ -2,10 +2,23 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100px;
+    height: 160px;
+}
+
+
+.buttons-semi-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80px;
 }
 
 .buttons {
     display: flex;
     gap: 10px;
+}
+
+.green {
+    /*14ad42*/
+    background-color: #333;
 }
