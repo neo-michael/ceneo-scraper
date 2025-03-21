@@ -25,15 +25,15 @@
             <li><a href="{{ url_for('product.product_list') }}">{{ _("Product List") }}</a></li>
             <li><a href="{{ url_for('description.about') }}">{{ _("About me") }}</a></li>
         </ul>
-        
+
         <div class="language-switch">
             <form method="post" action="{{ url_for('set_language', location=request.endpoint) }}">
                 <input type="hidden" name="args" id="args" value="{{ request.view_args }}" hidden />
                 <select name="lang" onchange="this.form.submit()">
                     {% for locale in get_locales() %}
-                        <option value="{{ locale }}" {% if get_locale() == locale %}selected{% endif %}>
-                            {{ locale | upper }}    
-                        </option>
+                    <option value="{{ locale }}" {% if get_locale()==locale %}selected{% endif %}>
+                        {{ locale | upper }}
+                    </option>
                     {% endfor %}
                 </select>
             </form>

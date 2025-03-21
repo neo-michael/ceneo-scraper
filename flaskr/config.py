@@ -5,10 +5,20 @@ BABEL_DEFAULT_LOCALE = "en"
 FILTERS_FOR = {
     "name": {"name": "div", "class_": "js_searchInGoogleTooltip breadcrumbs__item"},
     "score": {"name": "span", "class_": "product-review__score", "content": True},
-    "review_count": {"name": "a", "class_": "product-review__link link link--accent js_reviews-link js_clickHash js_seoUrl"},
-    "review_block": {"name": "div", "class_": "js_product-reviews js_reviews-hook js_product-reviews-container"},
+    "review_count": {
+        "name": "a",
+        "class_": "product-review__link link link--accent js_reviews-link js_clickHash js_seoUrl",
+    },
+    "review_block": {
+        "name": "div",
+        "class_": "js_product-reviews js_reviews-hook js_product-reviews-container",
+    },
     "review": {"name": "div", "class_": "user-post user-post__card js_product-review"},
-    "next_location": {"name": "a", "class_": "pagination__item pagination__next", "href": True}
+    "next_location": {
+        "name": "a",
+        "class_": "pagination__item pagination__next",
+        "href": True,
+    },
 }
 
 HTTP_CONFIG = {

@@ -10,9 +10,9 @@ const toggleLoader = (show) => {
     }
 }
 
-// HACK: disable loader when the page is refreshed
+// HACK: disable loader when the page changes
 setInterval(() => {
-    if (window.performance.getEntriesByType("navigation")[0].type !== "navigate") {
+    if (!window.location.href.includes("extract")) {
         toggleLoader(false)
     }
-}, 1000);
+}, 500);

@@ -1,100 +1,97 @@
 {% extends "base.html" %}
 
 {% block title %}
-    {{ _("Review Analyzer") }}
+{{ _("Review Analyzer") }}
 {% endblock title %}
 
 {% block head %}
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
-    <script src="{{ url_for('static', filename='scripts/charts.js') }}"></script>
-    <link
-        rel="stylesheet"
-        href="{{ url_for('static', filename='styles/charts.css') }}"
-    />
-    <link
-        rel="stylesheet"
-        href="{{ url_for('static', filename='styles/buttons.css' ) }}"
-    />
-    <script>
-        const reviewData = JSON.parse("{{ reviews | safe }}")
-        const recommendLabels = [ "{{ _('Recommended') }}", "{{ _('Not Recommended') }}"]
-    </script>
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/charts.css') }}" />
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/buttons.css' ) }}" />
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
+<script src="{{ url_for('static', filename='scripts/charts.js') }}"></script>
+<script>
+    const reviewData = JSON.parse("{{ reviews | safe }}")
+    const recommendLabels = ["{{ _('Recommended') }}", "{{ _('Not Recommended') }}"]
+</script>
 {% endblock head %}
 
 {% block content %}
-    <div class="buttons-wrapper">
-        <button class="download-button-alt"><a class="link-no-style" href="{{ url_for('product.product', product_id=request.view_args['product_id']) }}">{{ _('Back To Reviews') }}</a></button>
-        <span class="sep"></span>
-        <h1>{{ name }}</h1>
-    </div>
-    <div class="chart-container">
-        <canvas id="pie-chart"></canvas>
-        <canvas id="bar-chart"></canvas>
-    </div>
+<div class="buttons-wrapper">
+    <button class="download-button-alt">
+        <a class="link-no-style" href="{{ url_for('product.product', product_id=request.view_args['product_id']) }}">
+            {{ _('Back To Reviews') }}
+        </a>
+    </button>
+    <span class="sep"></span>
+    <h1>{{ name }}</h1>
+</div>
+<div class="chart-container">
+    <canvas id="pie-chart"></canvas>
+    <canvas id="bar-chart"></canvas>
+</div>
 
-    <script>
-        const recommendedCount = reviewData.filter(item => item.recommend).length
-        const notRecommendedCount = reviewData.length - recommendedCount
-        const recommendData = [recommendedCount, notRecommendedCount]
+<script>
+    const recommendedCount = reviewData.filter(item => item.recommend).length
+    const notRecommendedCount = reviewData.length - recommendedCount
+    const recommendData = [recommendedCount, notRecommendedCount]
 
-        const recommendChartData = createChartData(recommendLabels, recommendData, {
-            backgroundColor: ["#36a2eb", "#ff6384"],
-            hoverBackgroundColor: ["#36a2eb", "#ff6384"]
-        })
+    const recommendChartData = createChartData(recommendLabels, recommendData, {
+        backgroundColor: ["#36a2eb", "#ff6384"],
+        hoverBackgroundColor: ["#36a2eb", "#ff6384"]
+    })
 
-        const pieChart = createChart("pie-chart", "pie", recommendChartData, (tooltipItem) => {
-            let label = tooltipItem.label || ""
-            if (label) {
-                label += ": " + tooltipItem.raw + " {{ _('reviews') }}"
-            }
-            return label
-        })
+    const pieChart = createChart("pie-chart", "pie", recommendChartData, (tooltipItem) => {
+        let label = tooltipItem.label || ""
+        if (label) {
+            label += ": " + tooltipItem.raw + " {{ _('reviews') }}"
+        }
+        return label
+    })
 
+    const ratingLabels = ["1", "1.5", "2", "2.5", "3", "3.5", "4", "4.5", "5"]
+    const ratingData = new Array(ratingLabels.length).fill(0)
 
-        const ratingLabels = ["1", "1.5", "2", "2.5", "3", "3.5", "4", "4.5", "5"]
-        const ratingData = new Array(ratingLabels.length).fill(0)
+    reviewData.forEach(review => {
+        const index = Math.floor((review.stars - 1) * 2)
+        ratingData[index] += 1
+    })
 
-        reviewData.forEach(review => {
-            const index = Math.floor((review.stars - 1) * 2)
-            ratingData[index] += 1
-        })
+    const ratingColors = [
+        "#FF0000", "#FF4000", "#FF8000",
+        "#FFBF00", "#FFFF00", "#BFFF00",
+        "#1DDF5F", "#1DDF2F", "#22AB22"
+    ]
 
-        const ratingColors = [
-            "#FF0000", "#FF4000", "#FF8000",
-            "#FFBF00", "#FFFF00", "#BFFF00",
-            "#1DDF5F", "#1DDF2F", "#52AB22"
-        ]
+    const ratingChartData = createChartData(ratingLabels, ratingData, {
+        label: "{{ _('Number of Reviews') }}",
+        data: ratingData,
+        backgroundColor: ratingColors,
+        borderColor: ratingColors,
+        borderWidth: 1
+    })
 
-        const ratingChartData = createChartData(ratingLabels, ratingData, {
-            label: "{{ _('Number of Reviews') }}",
-            data: ratingData,
-            backgroundColor: ratingColors,
-            borderColor: ratingColors,
-            borderWidth: 1
-        })
-
-        const barChart = createChart("bar-chart", "bar", ratingChartData, 
-            (tooltipItem) => {
-                return tooltipItem.raw + " {{ _('reviews') }}"
-            },
-            {
-                y: {
-                    beginAtZero: true,
-                    title: {
-                        display: true,
-                        text: "{{ _('Number of Reviews') }}"
-                    }
-                },
-                x: {
-                    title: {
-                        display: true,
-                        text: "{{ _('Rating') }}"
-                    }
+    const barChart = createChart("bar-chart", "bar", ratingChartData,
+        (tooltipItem) => {
+            return tooltipItem.raw + " {{ _('reviews') }}"
+        },
+        {
+            y: {
+                beginAtZero: true,
+                title: {
+                    display: true,
+                    text: "{{ _('Number of Reviews') }}"
                 }
-            }, 
-            {
-                display: false
             },
-        )
-    </script>
-{% endblock content %} 
+            x: {
+                title: {
+                    display: true,
+                    text: "{{ _('Rating') }}"
+                }
+            }
+        },
+        {
+            display: false
+        },
+    )
+</script>
+{% endblock content %}

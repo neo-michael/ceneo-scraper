@@ -5,14 +5,11 @@ Ceneo Scraper
 {% endblock title %}
 
 {% block head %}
-    <link
-        rel="stylesheet"
-        href="{{ url_for('static', filename='styles/markdown.css') }}"
-    />
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/markdown.css') }}" />
 {% endblock head %}
 
 {% block content %}
-    <div class="markdown">
-        {{ text | safe }}
-    </div>
+<div class="markdown">
+    {{ text | safe }}
+</div>
 {% endblock content %}

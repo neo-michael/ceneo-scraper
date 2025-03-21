@@ -67,13 +67,12 @@ def get_locale():
     return request.accept_languages.best_match(current_app.config["LANGUAGES"])
 
 
-
-CONTROL_CHARACTERS = ''.join(chr(i) for i in range(32))
-ESCAPE_TABLE = str.maketrans({
+_CONTROL_CHARACTERS = ''.join(chr(i) for i in range(32))
+_ESCAPE_TABLE = str.maketrans({
     '"': '\u201c',
     "'": '\u201c',
-    **{ char: None for char in CONTROL_CHARACTERS } 
+    **{ char: None for char in _CONTROL_CHARACTERS } 
 })
 
 def escape_string(text):
-    return text.translate(ESCAPE_TABLE)
+    return text.translate(_ESCAPE_TABLE)

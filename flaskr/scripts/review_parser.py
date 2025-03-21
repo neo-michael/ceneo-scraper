@@ -1,5 +1,6 @@
-from ..models.review import Review
 from .utils import escape_string
+
+from ..models.review import Review
 
 class ReviewParser:
 

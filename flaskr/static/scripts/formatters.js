@@ -1,4 +1,4 @@
-const text_formatter = (cell, max = 50) => {
+const textFormatter = (cell, max = 50) => {
     const fullText = cell.getValue() || ""
     const shortText = fullText.length > max ? fullText.substring(0, max) + "…" : fullText
 
@@ -12,11 +12,7 @@ const text_formatter = (cell, max = 50) => {
     `
 }
 
-const bool_formatter = (cell) => {
-    return cell.getValue() ? "true" : "false";
-}
-
-const text_cell_click_handler = (e, cell) => {
+const textCellClickHandler = (e, cell) => {
     const el = cell.getElement()
     const shortEl = el.querySelector('.text-wrapper.short')
     const fullEl = el.querySelector('.text-wrapper.full')
@@ -40,9 +36,9 @@ const text_cell_click_handler = (e, cell) => {
     e.stopPropagation();
 }
 
-const title_formatter = (cell) => {
-    const row_data = cell.getData()
-    const id = row_data["id"]
+const titleFormatter = (cell) => {
+    const rowData = cell.getData()
+    const id = rowData["id"]
     const name = cell.getValue()
     return `<a href="https://ceneo.pl/${id}" target="_blank">${name}</a>`
 }

@@ -1,88 +1,85 @@
 {% extends "base.html" %}
 
 {% block title %}
-    {{ _('Product List') }}
+{{ _('Product List') }}
 {% endblock title %}
 
 {% block head %}
-    <link 
-        rel="stylesheet" 
-        href="https://unpkg.com/tabulator-tables@6.3.1/dist/css/tabulator_modern.min.css" 
-    />
+<link rel="stylesheet" href="https://unpkg.com/tabulator-tables@6.3.1/dist/css/tabulator_modern.min.css" />
 
-    <script 
-        type="text/javascript" 
-        src="https://unpkg.com/tabulator-tables@6.3.1/dist/js/tabulator.min.js"
-    ></script>
-    
-    <script src="{{ url_for('static', filename='scripts/formatters.js') }}"></script>
-    <script src="{{ url_for('static', filename='scripts/table.js') }}"></script>
-    <script>
-        const download_formatter = (cell) => {
-            const url = cell.getValue()
-            return `<button class="download-button-alt" onclick="window.open('${url}', '_blank')">{{ _('Download') }}</button>`
-        }
-        
-        const delete_formatter = (cell) => {
-            const row_data = cell.getData()
-            const id = row_data["id"]
-            const baseUrl = "{{ url_for('product.delete', product_id='__REPLACE_ME__')}}"
-            const finalURL = baseUrl.replace("__REPLACE_ME__", id)
-            return `<button class="delete-button"><a class="link-no-style" href=${finalURL}>{{ _('DELETE') }}</a></button>`
-        }
+<script type="text/javascript" src="https://unpkg.com/tabulator-tables@6.3.1/dist/js/tabulator.min.js"></script>
 
-        const id_formatter = (cell) => {
-            const row_data = cell.getData()
-            const id = row_data["id"]
-            const baseUrl = "{{ url_for('product.product', product_id='__REPLACE_ME__') }}"
-            const finalUrl = baseUrl.replace("__REPLACE_ME__", id)
-            return `<a href="${finalUrl}">${id}</a>`
-        }
-    </script>
+<script src="{{ url_for('static', filename='scripts/formatters.js') }}"></script>
+<script src="{{ url_for('static', filename='scripts/table.js') }}"></script>
+<script>
+    const downloadFormatter = (cell) => {
+        const url = cell.getValue()
+        return `
+        <button class="download-button-alt" onclick="window.open('${url}', '_blank')">
+            {{ _('Download') }}
+        </button>
+        `
+    }
+
+    const deleteFormatter = (cell) => {
+        const row_data = cell.getData()
+        const id = row_data["id"]
+        const baseUrl = "{{ url_for('product.delete', product_id='__REPLACE_ME__')}}"
+        const finalURL = baseUrl.replace("__REPLACE_ME__", id)
+        return `<button class="delete-button"><a class="link-no-style" href=${finalURL}>{{ _('DELETE') }}</a></button>`
+    }
+
+    const idFormatter = (cell) => {
+        const row_data = cell.getData()
+        const id = row_data["id"]
+        const baseUrl = "{{ url_for('product.product', product_id='__REPLACE_ME__') }}"
+        const finalUrl = baseUrl.replace("__REPLACE_ME__", id)
+        return `<a href="${finalUrl}">${id}</a>`
+    }
+</script>
 {% endblock head %}
 
 {% block content %}
-    <div class="reviews-table-parent padded">
-        <div id="reviews-table"></div>
-    </div>
-    <script>
-        let products = JSON.parse("{{ products | safe }}")
+<div class="reviews-table-parent padded">
+    <div id="reviews-table"></div>
+</div>
+<script>
+    let products = JSON.parse("{{ products | safe }}")
 
-        products.forEach(obj => {
-            obj.delete_url = ""
-        })
+    products.forEach(obj => {
+        obj.delete_url = ""
+    })
 
-        const table = createTable("#reviews-table", products, [
-            { title: "{{ _('Id') }}", field: "id", headerFilter: "input", hozAlign: "center", formatter: id_formatter, width: 120 },
-            { title: "{{ _('Name') }}", field: "name", headerFilter: "input", formatter: title_formatter, width: 680 },
-            { title: "{{ _('Review Count') }}", field: "review_count", headerFilter: "input", hozAlign: "center", width: 180},
-            { title: "{{ _('Average Score') }}", field: "avg_score", headerFilter: "input", hozAlign: "center", width: 180},
-            { title: "{{ _('Pros Count') }}", field: "pros_count", headerFilter: "input", hozAlign: "center", width: 150 },
-            { title: "{{ _('Cons Count') }}", field: "cons_count", headerFilter: "input", hozAlign: "center", width: 150 },
-            { title: "JSON", field: "json_url", hozAlign: "center", formatter: download_formatter, width: 110 },
-            { title: "CSV", field: "csv_url", hozAlign: "center", formatter: download_formatter, width: 110 },
-            { title: "XLSX", field: "xlsx_url", hozAlign: "center", formatter: download_formatter, width: 110 },
-            { title: "{{ _('Delete' )}}", field: "delete_url", hozAlign: "center", formatter: delete_formatter, width: 100 },
-        ],
-        {
-            "page_size": "{{ _('Page Size') }}",
-            "page_title": "{{ _('Show Page') }}",
-            "first": "{{ _('First') }}",
-            "first_title": "{{ _('First Page') }}",
-            "last": "{{ _('Last') }}",
-            "last_title": "{{ _('Last Page') }}",
-            "prev": "{{ _('Prev') }}",
-            "prev_title": "{{ _('Prev Page') }}",
-            "next": "{{ _('Next') }}",
-            "next_title": "{{ _('Next Page') }}",
-            "all": "{{ _('All') }}",
-            "counter": {
-                "showing": "{{ _('Showing') }}",
-                "of": "{{ _('of') }}",
-                "rows": "{{ _('rows') }}",
-                "pages": "{{ _('pages') }}",
-            }
-        })
-       
-    </script>
+    const table = createTable("#reviews-table", products, [
+        { title: "{{ _('Id') }}", field: "id", headerFilter: "input", hozAlign: "center", formatter: idFormatter, width: 120 },
+        { title: "{{ _('Name') }}", field: "name", headerFilter: "input", formatter: titleFormatter, width: 680 },
+        { title: "{{ _('Review Count') }}", field: "review_count", headerFilter: "input", hozAlign: "center", width: 180 },
+        { title: "{{ _('Average Score') }}", field: "avg_score", headerFilter: "input", hozAlign: "center", width: 180 },
+        { title: "{{ _('Pros Count') }}", field: "pros_count", headerFilter: "input", hozAlign: "center", width: 150 },
+        { title: "{{ _('Cons Count') }}", field: "cons_count", headerFilter: "input", hozAlign: "center", width: 150 },
+        { title: "JSON", field: "json_url", hozAlign: "center", formatter: downloadFormatter, width: 110 },
+        { title: "CSV", field: "csv_url", hozAlign: "center", formatter: downloadFormatter, width: 110 },
+        { title: "XLSX", field: "xlsx_url", hozAlign: "center", formatter: downloadFormatter, width: 110 },
+        { title: "{{ _('Delete' )}}", field: "delete_url", hozAlign: "center", formatter: deleteFormatter, width: 100 },
+    ], {
+        "page_size": "{{ _('Page Size') }}",
+        "page_title": "{{ _('Show Page') }}",
+        "first": "{{ _('First') }}",
+        "first_title": "{{ _('First Page') }}",
+        "last": "{{ _('Last') }}",
+        "last_title": "{{ _('Last Page') }}",
+        "prev": "{{ _('Prev') }}",
+        "prev_title": "{{ _('Prev Page') }}",
+        "next": "{{ _('Next') }}",
+        "next_title": "{{ _('Next Page') }}",
+        "all": "{{ _('All') }}",
+        "counter": {
+            "showing": "{{ _('Showing') }}",
+            "of": "{{ _('of') }}",
+            "rows": "{{ _('rows') }}",
+            "pages": "{{ _('pages') }}",
+        }
+    })
+
+</script>
 {% endblock content %}

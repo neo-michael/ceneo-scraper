@@ -1,12 +1,12 @@
 from flask import current_app, url_for
 from bs4 import BeautifulSoup
 
+import httpx
+
 from .review_parser import ReviewParser
 
-from ..scripts.utils import convert_to_csv, convert_to_xlsx, ensure_dir_exists, write_json_str
+from ..scripts.utils import convert_to_csv, convert_to_xlsx, ensure_dir_exists, escape_string, write_json_str
 from ..models.product import Product
-
-import httpx
 
 
 async def save_review_to_file(product_id):
@@ -102,7 +102,7 @@ def _parse_product_info(document):
     name_tag = document.find(**current_app.config["FILTERS_FOR"]["name"])
 
     if name_tag:
-        product.name = name_tag.text.strip()
+        product.name = escape_string(name_tag.text).strip()
     
     avg_score_tag = document.find(**current_app.config["FILTERS_FOR"]["score"])
     if avg_score_tag:

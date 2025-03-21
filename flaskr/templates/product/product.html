@@ -1,106 +1,105 @@
 {% extends "base.html" %}
 
 {% block title %}
-    {{ name }}
+{{ name }}
 {% endblock title %}
 
 {% block head %}
-    <link 
-        rel="stylesheet" 
-        href="https://unpkg.com/tabulator-tables@6.3.1/dist/css/tabulator_modern.min.css" 
-    />
+<link rel="stylesheet" href="https://unpkg.com/tabulator-tables@6.3.1/dist/css/tabulator_modern.min.css" />
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/review_text.css' ) }}" />
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/buttons.css' ) }}" />
 
-    <script 
-        type="text/javascript" 
-        src="https://unpkg.com/tabulator-tables@6.3.1/dist/js/tabulator.min.js"
-    ></script>
-
-    <link
-        rel="stylesheet"
-        href="{{ url_for('static', filename='styles/review_text.css' ) }}"
-    />
-    <link
-        rel="stylesheet"
-        href="{{ url_for('static', filename='styles/buttons.css' ) }}"
-    />
-    <script src="{{ url_for('static', filename='scripts/formatters.js') }}"></script>
-    <script src="{{ url_for('static', filename='scripts/table.js') }}"></script>
+<script type="text/javascript" src="https://unpkg.com/tabulator-tables@6.3.1/dist/js/tabulator.min.js"></script>
+<script src="{{ url_for('static', filename='scripts/formatters.js') }}"></script>
+<script src="{{ url_for('static', filename='scripts/table.js') }}"></script>
 {% endblock head %}
 
 {% block content %}
-    <div class="buttons-wrapper">
-        <div class="buttons">
-            {% for ext in urls.keys() %}
-                <button class="download-button" onclick="window.open('{{ urls[ext] }}', '_blank')">{{ _("Download") }} {{ ext }}</button>
-            {% endfor %}
-            <button class="download-button"><a class="link-no-style" href="{{ url_for('product.charts', product_id=request.view_args['product_id']) }}">{{ _("Show graphs") }}</a></button>
-        </div>
+<div class="buttons-wrapper">
+    <div class="buttons">
+        {% for ext in urls.keys() %}
+        <button class="download-button" onclick="window.open('{{ urls[ext] }}', '_blank')">
+            {{ _("Download") }} {{ ext }}
+        </button>
+        {% endfor %}
+        <button class="download-button">
+            <a class="link-no-style" href="{{ url_for('product.charts', product_id=request.view_args['product_id']) }}">
+                {{ _("Show graphs") }}
+            </a>
+        </button>
     </div>
-  
-    <div class="reviews-table-parent">
-        <div id="reviews-table"></div>
-    </div>
-    <script>
-        const bool_formatter = (cell) => {
-            return cell.getValue() ? "{{ _('Yes') }}" : "{{ _('No') }}";
-        }
+</div>
 
-        const tabledata = JSON.parse("{{ reviews | safe }}")
+<div class="reviews-table-parent">
+    <div id="reviews-table"></div>
+</div>
+<script>
+    // This whole section calls for help
 
-        for (let review of tabledata) {
-            review.pros = review.pros.join(", ")
-            review.cons = review.cons.join(", ")
-        }
+    const boolFormatter = (cell) => {
+        return cell.getValue() ? "{{ _('Yes') }}" : "{{ _('No') }}";
+    }
 
-        const table = createTable("#reviews-table", tabledata, [
-            { title: "{{ _('Id') }}", field: "id", headerFilter: "input", hozAlign: "center", width: 100 },
-            { title: "{{ _('Author') }}", field: "author", headerFilter: "input", hozAlign: "center", width: 100,
-                formatter: (cell) => text_formatter(cell, 12),
-                cellClick: text_cell_click_handler 
-            },
-            { title: "{{ _('Recommend') }}", field: "recommend", headerFilter: "input", hozAlign: "center", width: 130,
-                formatter: bool_formatter
-            },
-            { title: "{{ _('Stars') }}", field: "stars", headerFilter: "input", hozAlign: "center", formatter: "star", width: 90 },
-            { title: "{{ _('Is Verified') }}", field: "is_verified", headerFilter: "input", hozAlign: "center", width: 160,
-                formatter: bool_formatter
-            },
-            { title: "{{ _('Publish Date') }}", field: "published_datetime", headerFilter: "input", hozAlign: "center", width: 190 },
-            { title: "{{ _('Purchase Date') }}", field: "purchase_datatime", headerFilter: "input", hozAlign: "center", width: 190 },
-            { title: "{{ _('Likes') }}", field: "likes", headerFilter: "number", hozAlign: "center", width: 100 },
-            { title: "{{ _('Disikes') }}", field: "dislikes", headerFilter: "number", hozAlign: "center", width: 100 },
-            { title: "{{ _('Text') }}", field: "text", headerFilter: "input", width: 350,
-                formatter: text_formatter,
-                cellClick: text_cell_click_handler
-            },
-            { title: "{{ _('Pros') }}", field: "pros", headerFilter: "input", width: 185,
-                formatter: text_formatter,
-                cellClick: text_cell_click_handler
-            },
-            { title: "{{ _('Cons') }}", field: "cons", headerFilter: "input", width: 185,
-                formatter: text_formatter,
-                cellClick: text_cell_click_handler
-            }
-        ],
+    const tabledata = JSON.parse("{{ reviews | safe }}")
+
+    for (let review of tabledata) {
+        review.pros = review.pros.join(", ")
+        review.cons = review.cons.join(", ")
+    }
+
+    const table = createTable("#reviews-table", tabledata, [
+        { title: "{{ _('Id') }}", field: "id", headerFilter: "input", hozAlign: "center", width: 100 },
         {
-            "page_size": "{{ _('Page Size') }}",
-            "page_title": "{{ _('Show Page') }}",
-            "first": "{{ _('First') }}",
-            "first_title": "{{ _('First Page') }}",
-            "last": "{{ _('Last') }}",
-            "last_title": "{{ _('Last Page') }}",
-            "prev": "{{ _('Prev') }}",
-            "prev_title": "{{ _('Prev Page') }}",
-            "next": "{{ _('Next') }}",
-            "next_title": "{{ _('Next Page') }}",
-            "all": "{{ _('All') }}",
-            "counter": {
-                "showing": "{{ _('Showing') }}",
-                "of": "{{ _('of') }}",
-                "rows": "{{ _('rows') }}",
-                "pages": "{{ _('pages') }}",
-            }
-        })
-    </script>
+            title: "{{ _('Author') }}", field: "author", headerFilter: "input", hozAlign: "center", width: 100,
+            formatter: (cell) => textFormatter(cell, 12),
+            cellClick: textCellClickHandler
+        },
+        {
+            title: "{{ _('Recommend') }}", field: "recommend", headerFilter: "input", hozAlign: "center", width: 130,
+            formatter: boolFormatter
+        },
+        { title: "{{ _('Stars') }}", field: "stars", headerFilter: "input", hozAlign: "center", formatter: "star", width: 90 },
+        {
+            title: "{{ _('Is Verified') }}", field: "is_verified", headerFilter: "input", hozAlign: "center", width: 160,
+            formatter: boolFormatter
+        },
+        { title: "{{ _('Publish Date') }}", field: "published_datetime", headerFilter: "input", hozAlign: "center", width: 190 },
+        { title: "{{ _('Purchase Date') }}", field: "purchase_datatime", headerFilter: "input", hozAlign: "center", width: 190 },
+        { title: "{{ _('Likes') }}", field: "likes", headerFilter: "number", hozAlign: "center", width: 100 },
+        { title: "{{ _('Disikes') }}", field: "dislikes", headerFilter: "number", hozAlign: "center", width: 100 },
+        {
+            title: "{{ _('Text') }}", field: "text", headerFilter: "input", width: 350,
+            formatter: textFormatter,
+            cellClick: textCellClickHandler
+        },
+        {
+            title: "{{ _('Pros') }}", field: "pros", headerFilter: "input", width: 185,
+            formatter: textFormatter,
+            cellClick: textCellClickHandler
+        },
+        {
+            title: "{{ _('Cons') }}", field: "cons", headerFilter: "input", width: 185,
+            formatter: textFormatter,
+            cellClick: textCellClickHandler
+        }
+    ], {
+        "page_size": "{{ _('Page Size') }}",
+        "page_title": "{{ _('Show Page') }}",
+        "first": "{{ _('First') }}",
+        "first_title": "{{ _('First Page') }}",
+        "last": "{{ _('Last') }}",
+        "last_title": "{{ _('Last Page') }}",
+        "prev": "{{ _('Prev') }}",
+        "prev_title": "{{ _('Prev Page') }}",
+        "next": "{{ _('Next') }}",
+        "next_title": "{{ _('Next Page') }}",
+        "all": "{{ _('All') }}",
+        "counter": {
+            "showing": "{{ _('Showing') }}",
+            "of": "{{ _('of') }}",
+            "rows": "{{ _('rows') }}",
+            "pages": "{{ _('pages') }}",
+        }
+    })
+</script>
 {% endblock content %}
-

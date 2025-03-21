@@ -19,9 +19,6 @@ const createChart = (chartId, type, chartData, tooltipCallback, scales={}, legen
             scales: scales,
             plugins: {
                 legend: legend,
-                // legend: {
-                //     position: "top",
-                // },
                 tooltip: {
                     callbacks: {
                         label: tooltipCallback
@@ -29,6 +26,5 @@ const createChart = (chartId, type, chartData, tooltipCallback, scales={}, legen
                 }
             }
         }
-    });
-
+    })
 }

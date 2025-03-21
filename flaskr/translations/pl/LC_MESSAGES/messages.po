@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-03-20 23:10+0100\n"
+"POT-Creation-Date: 2025-03-21 19:54+0100\n"
 "PO-Revision-Date: 2025-03-11 20:48+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: pl\n"
@@ -35,7 +35,7 @@ msgstr "Strona główna"
 msgid "Extract reviews"
 msgstr "Ekstraktuj opinie"
 
-#: flaskr/templates/base.html:25
+#: flaskr/templates/base.html:25 flaskr/templates/product/product_list.html:4
 msgid "Product List"
 msgstr "Lista produktów"
 
@@ -67,18 +67,18 @@ msgid "Back To Reviews"
 msgstr "Wróć Do Opinii"
 
 #: flaskr/templates/product/charts.html:48
-#: flaskr/templates/product/charts.html:78
+#: flaskr/templates/product/charts.html:77
 #, fuzzy
 msgid "reviews"
 msgstr "opinie"
 
-#: flaskr/templates/product/charts.html:69
-#: flaskr/templates/product/charts.html:85
+#: flaskr/templates/product/charts.html:68
+#: flaskr/templates/product/charts.html:84
 #, fuzzy
 msgid "Number of Reviews"
 msgstr "Liczba Opinii"
 
-#: flaskr/templates/product/charts.html:91
+#: flaskr/templates/product/charts.html:90
 msgid "Rating"
 msgstr "Ocena"
 
@@ -92,7 +92,7 @@ msgid "Product Id"
 msgstr "Id produktu"
 
 #: flaskr/templates/product/product.html:29
-#: flaskr/templates/product/product_list.html:15
+#: flaskr/templates/product/product_list.html:20
 msgid "Download"
 msgstr "Pobierz"
 
@@ -100,81 +100,163 @@ msgstr "Pobierz"
 msgid "Show graphs"
 msgstr "Pokaż wykresy"
 
-#: flaskr/templates/product/product.html:47
-#: flaskr/templates/product/product_list.html:48
+#: flaskr/templates/product/product.html:40
+msgid "Yes"
+msgstr "Tak"
+
+#: flaskr/templates/product/product.html:40
+msgid "No"
+msgstr "Nie"
+
+#: flaskr/templates/product/product.html:51
+#: flaskr/templates/product/product_list.html:53
 msgid "Id"
 msgstr "Id"
 
-#: flaskr/templates/product/product.html:48
+#: flaskr/templates/product/product.html:52
 msgid "Author"
 msgstr "Autor"
 
-#: flaskr/templates/product/product.html:52
+#: flaskr/templates/product/product.html:56
 msgid "Recommend"
 msgstr "Poleca"
 
-#: flaskr/templates/product/product.html:55
+#: flaskr/templates/product/product.html:59
 msgid "Stars"
 msgstr "Ocena"
 
-#: flaskr/templates/product/product.html:56
+#: flaskr/templates/product/product.html:60
 msgid "Is Verified"
 msgstr "Potwierdzona"
 
-#: flaskr/templates/product/product.html:57
+#: flaskr/templates/product/product.html:61
 msgid "Publish Date"
 msgstr "Data Wystawienia"
 
-#: flaskr/templates/product/product.html:58
+#: flaskr/templates/product/product.html:62
 msgid "Purchase Date"
 msgstr "Data zakupu"
 
-#: flaskr/templates/product/product.html:59
+#: flaskr/templates/product/product.html:63
 msgid "Likes"
 msgstr "Polubienia"
 
-#: flaskr/templates/product/product.html:60
+#: flaskr/templates/product/product.html:64
 msgid "Disikes"
 msgstr "Niepolubienia"
 
-#: flaskr/templates/product/product.html:61
+#: flaskr/templates/product/product.html:65
 msgid "Text"
 msgstr "Treść"
 
-#: flaskr/templates/product/product.html:65
+#: flaskr/templates/product/product.html:69
 msgid "Pros"
 msgstr "Zalety"
 
-#: flaskr/templates/product/product.html:69
+#: flaskr/templates/product/product.html:73
 msgid "Cons"
 msgstr "Wady"
 
-#: flaskr/templates/product/product_list.html:23
-#, fuzzy
-msgid "DELETE"
-msgstr "Usuń"
+#: flaskr/templates/product/product.html:79
+#: flaskr/templates/product/product_list.html:65
+msgid "Page Size"
+msgstr "Ilość Stron"
 
-#: flaskr/templates/product/product_list.html:49
+#: flaskr/templates/product/product.html:80
+#: flaskr/templates/product/product_list.html:66
+msgid "Show Page"
+msgstr "Pokaż Stronę"
+
+#: flaskr/templates/product/product.html:81
+#: flaskr/templates/product/product_list.html:67
+msgid "First"
+msgstr "Pierwsza"
+
+#: flaskr/templates/product/product.html:82
+#: flaskr/templates/product/product_list.html:68
+msgid "First Page"
+msgstr "Pierwsza Strona"
+
+#: flaskr/templates/product/product.html:83
+#: flaskr/templates/product/product_list.html:69
+msgid "Last"
+msgstr "Ostatnia"
+
+#: flaskr/templates/product/product.html:84
+#: flaskr/templates/product/product_list.html:70
+msgid "Last Page"
+msgstr "Ostatnia Strona"
+
+#: flaskr/templates/product/product.html:85
+#: flaskr/templates/product/product_list.html:71
+msgid "Prev"
+msgstr "Poprzednia"
+
+#: flaskr/templates/product/product.html:86
+#: flaskr/templates/product/product_list.html:72
+msgid "Prev Page"
+msgstr "Poprzednia Strona"
+
+#: flaskr/templates/product/product.html:87
+#: flaskr/templates/product/product_list.html:73
+msgid "Next"
+msgstr "Następna"
+
+#: flaskr/templates/product/product.html:88
+#: flaskr/templates/product/product_list.html:74
+msgid "Next Page"
+msgstr "Następna Strona"
+
+#: flaskr/templates/product/product.html:89
+#: flaskr/templates/product/product_list.html:75
+msgid "All"
+msgstr "Wszystkie"
+
+#: flaskr/templates/product/product.html:91
+#: flaskr/templates/product/product_list.html:77
+msgid "Showing"
+msgstr "Wyświetlanie"
+
+#: flaskr/templates/product/product.html:92
+#: flaskr/templates/product/product_list.html:78
+msgid "of"
+msgstr "z"
+
+#: flaskr/templates/product/product.html:93
+#: flaskr/templates/product/product_list.html:79
+msgid "rows"
+msgstr "rzędów"
+
+#: flaskr/templates/product/product.html:94
+#: flaskr/templates/product/product_list.html:80
+msgid "pages"
+msgstr "strony"
+
+#: flaskr/templates/product/product_list.html:28
+msgid "DELETE"
+msgstr "USUŃ"
+
+#: flaskr/templates/product/product_list.html:54
 msgid "Name"
 msgstr "Nazwa"
 
-#: flaskr/templates/product/product_list.html:50
+#: flaskr/templates/product/product_list.html:55
 msgid "Review Count"
 msgstr "Liczba opinii"
 
-#: flaskr/templates/product/product_list.html:51
+#: flaskr/templates/product/product_list.html:56
 msgid "Average Score"
 msgstr "Średnia ocena"
 
-#: flaskr/templates/product/product_list.html:52
+#: flaskr/templates/product/product_list.html:57
 msgid "Pros Count"
 msgstr "Ilość zalet"
 
-#: flaskr/templates/product/product_list.html:53
+#: flaskr/templates/product/product_list.html:58
 msgid "Cons Count"
 msgstr "Ilość wad"
 
-#: flaskr/templates/product/product_list.html:57
+#: flaskr/templates/product/product_list.html:62
 msgid "Delete"
 msgstr "Usuń"
 
