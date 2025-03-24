@@ -1,7 +1,7 @@
 import os
 import json
 
-from flask import Flask
+from flask import Flask, current_app
 from flask import make_response, redirect, render_template, request, session, url_for
 
 from flask_babel import Babel
@@ -45,4 +45,9 @@ def create_app(test_config=None):
     app.jinja_env.globals.update(get_locale=get_locale)
     app.jinja_env.globals.update(get_locales=lambda: app.config["LANGUAGES"])
     
+    app.get_filter = get_filter
     return app
+
+
+def get_filter(name):
+    return current_app.config["FILTERS_FOR"][name]

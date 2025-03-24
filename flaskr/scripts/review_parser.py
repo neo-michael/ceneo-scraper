@@ -1,3 +1,5 @@
+from flask import current_app
+
 from .utils import escape_string
 
 from ..models.review import Review
@@ -30,48 +32,48 @@ class ReviewParser:
         return review
 
     def _parse_author(self, content):
-        tag = content.find("span", class_="user-post__author-name")
+        tag = content.find(**current_app.get_filter("author"))
         if not tag:
             return ""
 
         return escape_string(tag.text).strip()
 
     def _parse_recommend(self, content):
-        tag = content.find("span", class_="user-post__author-recomendation")
+        tag = content.find(**current_app.get_filter("recommend"))
         if not tag:
             return False
 
-        recomend_tag = tag.find("em")
-        if not recomend_tag:
+        em_tag = tag.find("em")
+        if not em_tag:
             return False
 
-        if "recommended" in recomend_tag["class"]:
+        if "recommended" in em_tag["class"]:
             return True
 
         return False
 
     def _parse_stars(self, content):
-        tag = content.find("span", class_="user-post__score-count")
+        tag = content.find(**current_app.get_filter("stars"))
         if not tag:
             return -1.0
 
         (score, total) = tag.text.strip().split("/")
 
-        # Python won't parse floats with ','
+        # Python expects float with dot as a decimal seperator
         score = score.replace(",", ".")
 
         return float(score)
 
     def _parse_datetimes(self, content):
-        tag = content.find("span", class_="user-post__published")
+        tag = content.find(**current_app.get_filter("dates"))
         if not tag:
             return ("", "", "")
 
-        datetime_tags = tag.find_all("time")
+        time_tag = tag.find_all("time")
 
         result = []
 
-        for dt_tags in datetime_tags:
+        for dt_tags in time_tag:
             result.append(dt_tags["datetime"])
 
         # Ensure the result has at least size 3
@@ -81,7 +83,11 @@ class ReviewParser:
         return tuple(result)
 
     def _parse_rating(self, content, rating, id):
-        tag = content.find("span", id=f"votes-{rating}-{id}")
+        tag_filter = current_app.get_filter("rating").copy()
+
+        tag_filter["id"] = tag_filter["id"].format(rating = rating, id = id)
+
+        tag = content.find(**tag_filter)
         if not tag:
             return 0
 
@@ -89,7 +95,7 @@ class ReviewParser:
 
     def _parse_origin(self, content):
         result = ""
-        tag = content.find("div", class_="user-post__origin")
+        tag = content.find(**current_app.get_filter("origin"))
         if not tag:
             return result
 
@@ -104,17 +110,15 @@ class ReviewParser:
         return result.strip()
 
     def _parse_text(self, content):
-        tag = content.find("div", class_="user-post__text")
+        tag = content.find(**current_app.get_filter("text"))
         if not tag:
             return ""
 
-        # replace the quote to prevent unexpeted string escaping
-        #return tag.text.strip().replace('"', '\u201c').replace('\n', '').replace('\r', '')
         return escape_string(tag.text).strip()
     
 
     def _parse_verified(self, content):
-        tag = content.find("div", class_="review-pz")
+        tag = content.find(**current_app.get_filter("verified"))
         if not tag:
             return False
 
@@ -123,7 +127,7 @@ class ReviewParser:
     def _parse_images(self, content):
         result = []
 
-        tag = content.find("div", class_="review-pictures js_product-review-carousel")
+        tag = content.find(**current_app.get_filter("images"))
         if not tag:
             return result
 
@@ -139,12 +143,12 @@ class ReviewParser:
         return result
 
     def _parse_pros_and_cons(self, content):
-        tag = content.find("div", class_="review-feature")
+        tag = content.find(**current_app.get_filter("pros&cons"))
         if not tag:
             return ([], [])
         
-        pros_tags = tag.find_all("div", class_="review-feature__item review-feature__item--positive")
-        cons_tags = tag.find_all("div", class_="review-feature__item review-feature__item--negative")
+        pros_tags = tag.find_all(**current_app.get_filter("pros"))
+        cons_tags = tag.find_all(**current_app.get_filter("cons"))
 
         pros = self._parse_trait(pros_tags)
         cons = self._parse_trait(cons_tags)
